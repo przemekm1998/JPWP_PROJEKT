@@ -22,5 +22,5 @@
 
 #### Objects
 * ~~General structure: PosX, PosY, Image and ImageView~~
-* Objects: Player, Obstacle, AdditionalPoints, RandomPoints
+* Objects: ~~Player~~, Obstacle, AdditionalPoints, RandomPoints
 * New icons
