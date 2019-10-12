@@ -21,6 +21,6 @@
 * Showing every move for 0.5s
 
 #### Objects
-* ~~General structure: PosX, PosY, Image and ImageView
+* ~~General structure: PosX, PosY, Image and ImageView~~
 * Objects: Player, Obstacle, AdditionalPoints, RandomPoints
 * New icons
