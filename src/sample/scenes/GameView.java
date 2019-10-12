@@ -5,6 +5,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import sample.scenes.gameview.GameMap;
 import sample.scenes.gameview.Instructions;
+import sample.scenes.gameview.Score;
+
 import java.util.Random;
 
 public class GameView implements SceneView{
@@ -13,52 +15,25 @@ public class GameView implements SceneView{
 
     static boolean gameOver = false;
 
-
-
-    public static class Corner {
-        int x;
-        int y;
-
-        public Corner(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    public static class Player {
-        public static int x = 3;
-        public static int y = 6;
-    }
-
-    public static GridPane game;
+    public static GridPane gameMap;
     public static GridPane instructionsBox;
+    public static GridPane score;
 
     @Override
     public Scene createWindow(){
 
         GameMap mapView = new GameMap();
         Instructions instructions = new Instructions();
+        Score scoreView = new Score();
 
-        game = (GridPane)mapView.createWindow();
-        instructionsBox = (GridPane)instructions.createWindow();
-
-//        Button comeBack = new Button("Back to Menu");
-//        comeBack.setOnAction(e -> primaryStage.setScene(Main.menu));
-
-        // Grass Pane
-
-
-        // Instructions
-
-
-//        Canvas c = new Canvas(width*cornersize, height*cornersize);
-//        GraphicsContext gc = c.getGraphicsContext2D();
-
-
+        gameMap = (GridPane) mapView.createWindow();
+        instructionsBox = (GridPane) instructions.createWindow();
+        score = (GridPane) scoreView.createWindow();
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(game);
+        borderPane.setCenter(gameMap);
         borderPane.setLeft(instructionsBox);
+        borderPane.setRight(score);
 
         return new Scene(borderPane);
     }

@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 
 public abstract class MapObject {
 
+    private ImageView imgView;
     private Image img;
 
     private int posX = 0;
@@ -14,15 +15,21 @@ public abstract class MapObject {
 
     protected abstract String getImgPath();
 
-    private void setImg() {
+    public ImageView getImgView() {
+        return imgView;
+    }
+
+    public void setImgView() {
+        Image imgToView = getImg();
+        imgView = new ImageView(imgToView);
+    }
+
+    public Image getImg() {
         try{
             img = new Image(new FileInputStream(getImgPath()));
         } catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    public Image getImg(){
         return img;
     }
 
@@ -43,12 +50,12 @@ public abstract class MapObject {
     }
 
     protected MapObject(int posX, int posY) {
-        setImg();
+        setImgView();
         this.posX = posX;
         this.posY = posY;
     }
 
     protected MapObject() {
-        setImg();
+        setImgView();
     }
 }

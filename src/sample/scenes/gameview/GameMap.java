@@ -1,43 +1,49 @@
 package sample.scenes.gameview;
 
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import net.miginfocom.layout.Grid;
+import org.jetbrains.annotations.NotNull;
 import sample.Objects.Grass;
-import sample.Objects.MapObject;
 import sample.Objects.Player;
-import sample.scenes.GameView;
 import sample.scenes.SceneElement;
 
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class GameMap implements SceneElement {
-    public static ImageView player1;
+    public static Player playerObject;
+    public static List<Grass> list = new ArrayList<>();
+
+    private static final int MAX_WIDTH = 6;
+    private static final int MAX_HEIGHT = 6;
 
     @Override
     public Pane createWindow() {
-        Player playerObject = new Player();
+        playerObject = new Player();
         Grass grassObject = new Grass();
 
         return generateMap(playerObject, grassObject);
     }
 
+    @NotNull
     private GridPane generateMap(Player playerObject, Grass grassObject) {
 
         Function<GridPane, GridPane> mapFill = (gameMap) -> {
-            for(int i = 0; i <= 6; i++) {
-                for(int j = 0; j <= 6; j++) {
-                    gameMap.add(new ImageView(grassObject.getImg()), i, j, 1, 1);
+            for(int width = 0; width <= MAX_WIDTH; width++) {
+                for(int height = 0; height <= MAX_HEIGHT; height++) {
+                    gameMap.add(new ImageView(grassObject.getImg()), width, height, 1, 1);
+                    list.add(new Grass(width, height));
                 }
             }
-            player1 = new ImageView(playerObject.getImg());
-            gameMap.add(player1, GameView.Player.x, GameView.Player.y);
+
+            playerObject.setPosX(MAX_WIDTH/2);
+            playerObject.setPosY(MAX_HEIGHT);
+
+            gameMap.add(playerObject.getImgView(), playerObject.getPosX(), playerObject.getPosY());
+
             return gameMap;
         };
 

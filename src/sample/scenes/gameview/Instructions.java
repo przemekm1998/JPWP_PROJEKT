@@ -5,11 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import sample.Objects.Grass;
+import sample.Objects.Player;
 import sample.scenes.GameView;
 import sample.scenes.SceneElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Instructions implements SceneElement {
     private List<Directions> commands = new ArrayList<>();
@@ -47,26 +50,78 @@ public class Instructions implements SceneElement {
         Button start = new Button("START");
         start.setMinWidth(100);
         start.setOnAction(e -> {
-            for (Directions dir : commands) {
-                System.out.println("X: " + GameView.Player.x);
-                System.out.println("Y: " + GameView.Player.y);
-                GameView.game.getChildren().remove(GameMap.player1);
-                switch (dir) {
-                    case UP:
-                        GameView.Player.y--;
-                        break;
-                    case LEFT:
-                        GameView.Player.x--;
-                        break;
-                    case RIGHT:
-                        GameView.Player.x++;
-                        break;
-                    case DOWN:
-                        GameView.Player.y++;
-                        break;
-                }
-                GameView.game.add(GameMap.player1, GameView.Player.x, GameView.Player.y);
+            Player player = GameMap.playerObject;
+            GridPane gameMap = GameView.gameMap;
+
+
+            try {
+                gameMap.getChildren().remove(player.getImgView());
+                TimeUnit.SECONDS.sleep(1);
+//                gameMap.add(player.getImgView(), player.getPosX(), player.getPosY());
+
+                // delay 0.5 second
+                //TimeUnit.MICROSECONDS.sleep(500);
+
+                // delay 1 minute
+                //TimeUnit.MINUTES.sleep(1);
+
+            } catch (InterruptedException ex) {
+                System.err.format("IOException: %s%n", ex);
             }
+
+
+//            GridPane score = GameView.score;
+            //                gameMap.getChildren().remove(player.getImgView());
+
+
+//            for (Directions dir : commands) {
+//                System.out.println("X: " + player.getPosX());
+//                System.out.println("Y: " + player.getPosY());
+//
+//                switch (dir) {
+//                    case UP:
+//                        int y = player.getPosY();
+//                        y -= 1;
+//                        player.setPosY(y);
+//                        break;
+//                    case LEFT:
+//                        int x = player.getPosX();
+//                        x -= 1;
+//                        player.setPosX(x);
+//                        break;
+//                    case RIGHT:
+//                        int x2 = player.getPosX();
+//                        x2 += 1;
+//                        player.setPosX(x2);
+//                        break;
+//                    case DOWN:
+//                        int y2 = player.getPosY();
+//                        y2 += 1;
+//                        player.setPosY(y2);
+//                        break;
+//                }
+//                for(Grass object : GameMap.list) {
+//                    if (object.getPosX() == player.getPosX() && object.getPosY() == player.getPosY()) {
+//                        System.out.println("I'm on the grass");
+//                    }
+//                }
+
+//                try {
+//                    Thread.sleep(1000);
+//                    System.out.println("I slept");//1000 milliseconds is one second.
+//
+//                } catch(InterruptedException ex) {
+//                    Thread.currentThread().interrupt();
+//                }
+//
+//                Score.score++;
+//                Score.label.setText("Score: " + Score.score);
+//
+//                gameMap.getChildren().remove(player.getImgView());
+//                gameMap.add(player.getImgView(), player.getPosX(), player.getPosY());
+//
+//
+//            }
         });
 
         Label label = new Label("Available instructions");
@@ -74,7 +129,7 @@ public class Instructions implements SceneElement {
         GridPane instructions = new GridPane();
         instructions.setVgap(10);
         instructions.setAlignment(Pos.CENTER);
-        instructions.setPrefWidth(200);
+        instructions.setPrefWidth(getWidth());
         instructions.add(label, 0, 0);
         instructions.add(top, 0, 1);
         instructions.add(left, 0, 2);
@@ -87,7 +142,7 @@ public class Instructions implements SceneElement {
 
     @Override
     public int getWidth() {
-        return 0;
+        return 200;
     }
 
     @Override
