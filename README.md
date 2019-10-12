@@ -20,6 +20,13 @@
 * Case for reaching the bonus points
 * Showing every move for 0.5s
 
+#### MAP
+* ~~Map Generator~~
+* ~~Grass Fill~~
+* ~~Player on the map~~
+* Bonus points on the map
+* Obstacles on the map
+
 #### Objects
 * ~~General structure: PosX, PosY, Image and ImageView~~
 * Objects: ~~Player~~, Obstacle, AdditionalPoints, RandomPoints
