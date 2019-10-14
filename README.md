@@ -8,9 +8,9 @@
 
 ### Game
 #### GameView
-* Back to menu button on top
-* List of orders at the bottom
-* Start button and Score at the right
+* Back to menu button ath the bottom
+* List of orders at the right
+* ~~Start button and Score at the top~~
 * Failed or successfull pass of the map window
 
 #### Instructions
