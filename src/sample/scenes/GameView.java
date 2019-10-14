@@ -1,10 +1,12 @@
 package sample.scenes;
 
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import sample.scenes.gameview.GameMap;
 import sample.scenes.gameview.Instructions;
+import sample.scenes.gameview.ListOfInstructions;
 import sample.scenes.gameview.Score;
 
 import java.util.Random;
@@ -18,6 +20,7 @@ public class GameView implements SceneView{
     public static GridPane gameMap;
     public static GridPane instructionsBox;
     public static GridPane score;
+    public static GridPane listOfInstructions;
 
     @Override
     public Scene createWindow(){
@@ -25,15 +28,18 @@ public class GameView implements SceneView{
         GameMap mapView = new GameMap();
         Instructions instructions = new Instructions();
         Score scoreView = new Score();
+        ListOfInstructions list = new ListOfInstructions();
 
         gameMap = (GridPane) mapView.createWindow();
         instructionsBox = (GridPane) instructions.createWindow();
         score = (GridPane) scoreView.createWindow();
+        ScrollPane sp = new ScrollPane(list.createWindow());
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(gameMap);
         borderPane.setLeft(instructionsBox);
-        borderPane.setRight(score);
+        borderPane.setTop(score);
+        borderPane.setRight(sp);
 
         return new Scene(borderPane);
     }
