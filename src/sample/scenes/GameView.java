@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import net.miginfocom.layout.Grid;
 import sample.scenes.gameview.GameMap;
 import sample.scenes.gameview.Instructions;
 import sample.scenes.gameview.ListOfInstructions;
@@ -17,10 +18,9 @@ public class GameView implements SceneView{
 
     static boolean gameOver = false;
 
-    public static GridPane gameMap;
-    public static GridPane instructionsBox;
-    public static GridPane score;
     public static GridPane listOfInstructions;
+
+    public static GridPane gameMap;
 
     @Override
     public Scene createWindow(){
@@ -31,15 +31,12 @@ public class GameView implements SceneView{
         ListOfInstructions list = new ListOfInstructions();
 
         gameMap = (GridPane) mapView.createWindow();
-        instructionsBox = (GridPane) instructions.createWindow();
-        score = (GridPane) scoreView.createWindow();
-        ScrollPane sp = new ScrollPane(list.createWindow());
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(gameMap);
-        borderPane.setLeft(instructionsBox);
-        borderPane.setTop(score);
-        borderPane.setRight(sp);
+        borderPane.setCenter(mapView.createWindow());
+        borderPane.setLeft(instructions.createWindow());
+        borderPane.setTop(scoreView.createWindow());
+        borderPane.setRight(list.createWindow());
 
         return new Scene(borderPane);
     }

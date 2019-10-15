@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
 import sample.Objects.Grass;
+import sample.Objects.MapObject;
 import sample.Objects.Player;
 import sample.scenes.SceneElement;
 
@@ -15,7 +16,7 @@ import java.util.function.Function;
 
 public class GameMap implements SceneElement {
     public static Player playerObject;
-    public static List<Grass> list = new ArrayList<>();
+    public static List<MapObject> list = new ArrayList<>();
 
     private static final int MAX_WIDTH = 6;
     private static final int MAX_HEIGHT = 6;

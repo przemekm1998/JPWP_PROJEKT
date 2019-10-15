@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.Objects.Grass;
+import sample.Objects.MapObject;
 import sample.Objects.Player;
 import sample.scenes.GameView;
 import sample.scenes.SceneElement;
@@ -15,15 +16,26 @@ import java.util.List;
 
 public class Score implements SceneElement {
 
-    public static Label label = new Label();
     public static int score = 0;
+    public static Label scoreLabel = new Label("Score : " + score);
 
-    public static Label getLabel() {
-        return label;
+    public static int steps = 0;
+    public static Label stepsLabel = new Label("Steps : " + steps);
+
+    public static Label getscoreLabel() {
+        return scoreLabel;
     }
 
-    public static void setLabel(int score) {
-        label.setText("Score : " + score);
+    public static void setscoreLabel(int score) {
+        scoreLabel.setText("Score : " + score);
+    }
+
+    public static Label getstepsLabel() {
+        return stepsLabel;
+    }
+
+    public static void setsstepsLabel(int steps) {
+        stepsLabel.setText("Steps : " + steps);
     }
 
     public static int getScore() {
@@ -34,69 +46,50 @@ public class Score implements SceneElement {
         Score.score = score;
     }
 
+    public static int getSteps() {
+        return score;
+    }
+
+    public static void setSteps(int steps) {
+        Score.steps = score;
+    }
+
     @Override
     public Pane createWindow() {
         Button start = new Button("START");
         start.setMinWidth(100);
         start.setOnAction(e -> {
+
             Player player = GameMap.playerObject;
             GridPane gameMap = GameView.gameMap;
-            List<Directions> commandz = Instructions.commands;
+            List<Directions> commands = Instructions.commands;
+            List<MapObject> bonusPoints = GameMap.list;
 
-            for (Directions dir : commandz) {
+            for (Directions dir : commands) {
+                move(dir, player, gameMap);
 
-                gameMap.getChildren().remove(player.getImgView());
+                int newSteps = calculateScore(1, getSteps());
+                setSteps(newSteps);
+                setsstepsLabel(getSteps());
 
-                System.out.println("X: " + player.getPosX());
-                System.out.println("Y: " + player.getPosY());
-                int point = Score.getScore();
-                point += 1;
-                Score.setScore(point);
-                System.out.println("point = " + point);
-                Score.setLabel(point);
-
-                switch (dir) {
-                    case UP:
-                        int y = player.getPosY();
-                        y -= 1;
-                        player.setPosY(y);
-                        break;
-                    case LEFT:
-                        int x = player.getPosX();
-                        x -= 1;
-                        player.setPosX(x);
-                        break;
-                    case RIGHT:
-                        int x2 = player.getPosX();
-                        x2 += 1;
-                        player.setPosX(x2);
-                        break;
-                    case DOWN:
-                        int y2 = player.getPosY();
-                        y2 += 1;
-                        player.setPosY(y2);
-                        break;
-                }
-
-                for(Grass object : GameMap.list) {
-                    if (object.getPosX() == player.getPosX() && object.getPosY() == player.getPosY()) {
-                        System.out.println("I'm on the grass");
-                    }
-                }
-
-                gameMap.add(player.getImgView(), player.getPosX(), player.getPosY());
-
+                int bonus = checkBonusPoints(bonusPoints, player);
+                int newPoints = calculateScore(bonus, getScore());
+                setScore(newPoints);
+                setscoreLabel(getScore());
             }
         });
-
-        setLabel(getScore());
 
         GridPane score = new GridPane();
         score.setVgap(10);
         score.setAlignment(Pos.CENTER);
         score.setPrefHeight(getHeight());
-        score.add(label, 0, 1);
+
+        Label score1 = getscoreLabel();
+        Label steps1 = getstepsLabel();
+
         score.add(start, 0, 0);
+        score.add(score1, 0, 1);
+        score.add(steps1, 0, 2);
 
         return score;
     }
@@ -108,7 +101,55 @@ public class Score implements SceneElement {
 
     @Override
     public int getHeight() {
-        return 80;
+        return 100;
+    }
+
+    private void move(Directions direction, MapObject object, GridPane gameMap) {
+
+        switch (direction) {
+            case UP:
+                int y = object.getPosY();
+                y -= 1;
+                object.setPosY(y);
+                break;
+            case LEFT:
+                int x = object.getPosX();
+                x -= 1;
+                object.setPosX(x);
+                break;
+            case RIGHT:
+                int x2 = object.getPosX();
+                x2 += 1;
+                object.setPosX(x2);
+                break;
+            case DOWN:
+                int y2 = object.getPosY();
+                y2 += 1;
+                object.setPosY(y2);
+                break;
+        }
+
+        gameMap.getChildren().remove(object.getImgView());
+        gameMap.add(object.getImgView(), object.getPosX(), object.getPosY());
+    }
+
+    private int calculateScore(int addedPoints, int points) {
+        int point = points;
+        point += addedPoints;
+        return point;
+    }
+
+    private int checkBonusPoints(List<MapObject> bonusPoints, Player player) {
+        int points = 0;
+
+        for(MapObject object : bonusPoints) {
+            if (object.getPosX() == player.getPosX() && object.getPosY() == player.getPosY()) {
+                System.out.println(" +1 point ");
+                points += 5;
+            }
+        }
+
+        return points;
     }
 
 }

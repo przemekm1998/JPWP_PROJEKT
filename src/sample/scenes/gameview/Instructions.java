@@ -29,46 +29,38 @@ public class Instructions implements SceneElement {
     @Override
     public Pane createWindow() {
 
-        Label listOfCommands = ListOfInstructions.label;
-
         Button top = new Button("UP");
         top.setMinWidth(100);
         top.setOnAction(e -> {
-            commands.add(Directions.UP);
-            listOfCommands.setText(listOfCommands.getText() + "\n UP");
-            System.out.println("Added top");
+            addCommand(Directions.UP);
         });
 
         Button left = new Button("LEFT");
         left.setMinWidth(100);
         left.setOnAction(e -> {
-            commands.add(Directions.LEFT);
-            listOfCommands.setText(listOfCommands.getText() + "\n LEFT");
-            System.out.println("Added left");
+            addCommand(Directions.LEFT);
         });
 
         Button right = new Button("RIGHT");
         right.setMinWidth(100);
         right.setOnAction(e -> {
-            commands.add(Directions.RIGHT);
-            listOfCommands.setText(listOfCommands.getText() + "\n RIGHT");
-            System.out.println("Added right");
+            addCommand(Directions.RIGHT);
         });
 
         Button down = new Button("DOWN");
         down.setMinWidth(100);
         down.setOnAction(e -> {
-            commands.add(Directions.DOWN);
-            listOfCommands.setText(listOfCommands.getText() + "\n DOWN");
-            System.out.println("Added down");
+            addCommand(Directions.DOWN);
         });
 
         Label label = new Label("Available instructions");
 
         GridPane instructions = new GridPane();
+
         instructions.setVgap(10);
         instructions.setAlignment(Pos.CENTER);
         instructions.setPrefWidth(getWidth());
+
         instructions.add(label, 0, 0);
         instructions.add(top, 0, 1);
         instructions.add(left, 0, 2);
@@ -86,6 +78,13 @@ public class Instructions implements SceneElement {
     @Override
     public int getHeight() {
         return 0;
+    }
+
+    private void addCommand(Directions direction) {
+        Label listOfCommands = ListOfInstructions.label;
+
+        commands.add(direction);
+        listOfCommands.setText(listOfCommands.getText() + "MOVE " + direction.toString() + " (step " + commands.size() + ")"  + "\n");
     }
 
 }
