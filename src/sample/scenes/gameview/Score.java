@@ -5,13 +5,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import sample.Objects.Grass;
+import sample.InfoBox;
 import sample.Objects.MapObject;
 import sample.Objects.Player;
 import sample.scenes.GameView;
 import sample.scenes.SceneElement;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Score implements SceneElement {
@@ -65,19 +63,34 @@ public class Score implements SceneElement {
             List<Directions> commands = Instructions.commands;
             List<MapObject> bonusPoints = GameMap.list;
 
-            for (Directions dir : commands) {
-                move(dir, player, gameMap);
+//            gameMap.getChildren().remove(player.getImgView());
 
-                int newSteps = calculateScore(1, getSteps());
-                setSteps(newSteps);
-                setsstepsLabel(getSteps());
+            if (commands.isEmpty()) {
+                InfoBox.display("Warning", "No instructions to run");
+            } else {
+                for (Directions dir : commands) {
+                    move(dir, player, gameMap);
 
-                int bonus = checkBonusPoints(bonusPoints, player);
-                int newPoints = calculateScore(bonus, getScore());
-                setScore(newPoints);
-                setscoreLabel(getScore());
+                    gameMap.setRowIndex(player.getImgView(), player.getPosY());
+                    gameMap.setColumnIndex(player.getImgView(), player.getPosX());
+
+                    int newSteps = calculateScore(1, getSteps());
+                    setSteps(newSteps);
+                    setsstepsLabel(getSteps());
+
+                    int bonus = checkBonusPoints(bonusPoints, player);
+                    int newPoints = calculateScore(bonus, getScore());
+                    setScore(newPoints);
+                    setscoreLabel(getScore());
+                }
+                commands.clear();
+                ListOfInstructions.label.setText("");
             }
+
+//            gameMap.add(player.getImgView(), player.getPosX(), player.getPosY());
+
         });
+
 
         GridPane score = new GridPane();
         score.setVgap(10);
@@ -128,9 +141,6 @@ public class Score implements SceneElement {
                 object.setPosY(y2);
                 break;
         }
-
-        gameMap.getChildren().remove(object.getImgView());
-        gameMap.add(object.getImgView(), object.getPosX(), object.getPosY());
     }
 
     private int calculateScore(int addedPoints, int points) {
@@ -142,7 +152,7 @@ public class Score implements SceneElement {
     private int checkBonusPoints(List<MapObject> bonusPoints, Player player) {
         int points = 0;
 
-        for(MapObject object : bonusPoints) {
+        for (MapObject object : bonusPoints) {
             if (object.getPosX() == player.getPosX() && object.getPosY() == player.getPosY()) {
                 System.out.println(" +1 point ");
                 points += 5;

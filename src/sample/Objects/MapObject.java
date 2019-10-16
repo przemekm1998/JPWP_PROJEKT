@@ -19,7 +19,7 @@ public abstract class MapObject {
         return imgView;
     }
 
-    public void setImgView() {
+    private void setImgView() {
         Image imgToView = getImg();
         imgView = new ImageView(imgToView);
     }

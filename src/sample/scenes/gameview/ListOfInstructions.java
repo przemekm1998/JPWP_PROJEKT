@@ -6,7 +6,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import sample.InfoBox;
 import sample.scenes.SceneElement;
+
+import java.util.List;
 
 public class ListOfInstructions implements SceneElement {
     public static Label label = new Label("");
@@ -24,10 +27,17 @@ public class ListOfInstructions implements SceneElement {
         Button delete = new Button("DELETE LAST INSTRUCTION");
         delete.setMinWidth(100);
         delete.setOnAction(e -> {
-//            commands.add(Directions.LEFT);
-            String listOfWords = label.getText();
-            int index= listOfWords.lastIndexOf("MOVE");
-            label.setText(listOfWords.substring(0, index));
+            List<Directions> commands = Instructions.commands;
+            if (commands.size() > 0) {
+                System.out.println(commands.get(commands.size() - 1));
+                String listOfWords = label.getText();
+                int index= listOfWords.lastIndexOf("MOVE");
+                label.setText(listOfWords.substring(0, index));
+                commands.remove(commands.size() - 1);
+            }
+            else {
+                InfoBox.display("Warning", "No instruction to delete");
+            }
         });
 
         Label list = new Label("List of Instructions");
