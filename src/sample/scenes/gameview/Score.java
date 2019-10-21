@@ -1,5 +1,6 @@
 package sample.scenes.gameview;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -32,7 +33,7 @@ public class Score implements SceneElement {
         return stepsLabel;
     }
 
-    public static void setsstepsLabel(int steps) {
+    public static void setStepsLabel(int steps) {
         stepsLabel.setText("Steps : " + steps);
     }
 
@@ -63,30 +64,53 @@ public class Score implements SceneElement {
             List<Directions> commands = Instructions.commands;
             List<MapObject> bonusPoints = GameMap.list;
 
-//            gameMap.getChildren().remove(player.getImgView());
-
             if (commands.isEmpty()) {
                 InfoBox.display("Warning", "No instructions to run");
             } else {
-                for (Directions dir : commands) {
-                    move(dir, player, gameMap);
+                new Thread(() -> {
+                    for (Directions dir : commands) {
+                        try {
+                            Thread.sleep(500); // Wait for 1 sec before updating the color
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
 
-                    gameMap.setRowIndex(player.getImgView(), player.getPosY());
-                    gameMap.setColumnIndex(player.getImgView(), player.getPosX());
-
-                    int newSteps = calculateScore(1, getSteps());
-                    setSteps(newSteps);
-                    setsstepsLabel(getSteps());
-
-                    int bonus = checkBonusPoints(bonusPoints, player);
-                    int newPoints = calculateScore(bonus, getScore());
-                    setScore(newPoints);
-                    setscoreLabel(getScore());
-                }
-                commands.clear();
-                ListOfInstructions.label.setText("");
+                        Platform.runLater(() -> {
+                            move(dir, player, gameMap);
+                            gameMap.setRowIndex(player.getImgView(), player.getPosY());
+                            gameMap.setColumnIndex(player.getImgView(), player.getPosX());
+                            if(player.getPosX() == 4) {
+                                commands.clear();
+                                ListOfInstructions.label.setText("");
+                                InfoBox.display("Won!", "You've won!");
+                            }
+                        });
+                    }
+                }).start();
             }
 
+//            gameMap.getChildren().remove(player.getImgView());
+//
+//            if (commands.isEmpty()) {
+//                InfoBox.display("Warning", "No instructions to run");
+//            } else {
+//                for (Directions dir : commands) {
+//                    move(dir, player, gameMap);
+//
+//                    gameMap.setRowIndex(player.getImgView(), player.getPosY());
+//                    gameMap.setColumnIndex(player.getImgView(), player.getPosX());
+//
+
+//
+//                    int bonus = checkBonusPoints(bonusPoints, player);
+//                    int newPoints = calculateScore(bonus, getScore());
+//                    setScore(newPoints);
+//                    setscoreLabel(getScore());
+//                }
+//                commands.clear();
+//                ListOfInstructions.label.setText("");
+//            }
+//
 //            gameMap.add(player.getImgView(), player.getPosX(), player.getPosY());
 
         });
@@ -97,12 +121,10 @@ public class Score implements SceneElement {
         score.setAlignment(Pos.CENTER);
         score.setPrefHeight(getHeight());
 
-        Label score1 = getscoreLabel();
-        Label steps1 = getstepsLabel();
 
         score.add(start, 0, 0);
-        score.add(score1, 0, 1);
-        score.add(steps1, 0, 2);
+        score.add(scoreLabel, 0, 1);
+        score.add(stepsLabel, 0, 2);
 
         return score;
     }

@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.Objects.Grass;
@@ -66,6 +67,8 @@ public class Instructions implements SceneElement {
         instructions.add(left, 0, 2);
         instructions.add(right, 0, 3);
         instructions.add(down, 0, 4);
+
+
 
         return instructions;
     }

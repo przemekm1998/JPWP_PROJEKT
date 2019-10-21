@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,14 +22,27 @@ public class InfoBox {
         label.setText(message);
 
         //Create two buttons
-        Button okButton = new Button("Ok");
+        Button okButton = new Button("Ok z resetem");
+        Button okButton2 = new Button("Ok bez resetu");
 
         okButton.setOnAction(e -> {
+            window.close();
+            Main.mainWindow.close();
+            Platform.runLater( () -> {
+                try {
+                    new Main().start( new Stage() );
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+        });
+
+        okButton2.setOnAction(e -> {
             window.close();
         });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, okButton);
+        layout.getChildren().addAll(label, okButton, okButton2);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);

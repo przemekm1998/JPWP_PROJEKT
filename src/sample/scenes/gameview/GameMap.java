@@ -18,8 +18,8 @@ public class GameMap implements SceneElement {
     public static Player playerObject;
     public static List<MapObject> list = new ArrayList<>();
 
-    private static final int MAX_WIDTH = 6;
-    private static final int MAX_HEIGHT = 6;
+    public static final int MAX_WIDTH = 6;
+    public static final int MAX_HEIGHT = 6;
 
     @Override
     public Pane createWindow() {
