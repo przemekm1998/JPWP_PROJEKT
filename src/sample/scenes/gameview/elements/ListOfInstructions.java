@@ -1,4 +1,4 @@
-package sample.scenes.gameview;
+package sample.scenes.gameview.elements;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -7,19 +7,20 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.InfoBox;
-import sample.scenes.SceneElement;
+import sample.scenes.interfaces.SceneElement;
+import sample.scenes.gameview.controlling.Directions;
 
 import java.util.List;
 
 public class ListOfInstructions implements SceneElement {
     public static Label label = new Label("");
 
-    public static Label getLabel() {
-        return label;
+    public static String getLabelText() {
+        return label.getText();
     }
 
-    public static void setLabel(Label label) {
-        ListOfInstructions.label = label;
+    public static void setLabelText(String text) {
+        ListOfInstructions.label.setText(text);;
     }
 
     @Override
@@ -29,11 +30,8 @@ public class ListOfInstructions implements SceneElement {
         delete.setOnAction(e -> {
             List<Directions> commands = Instructions.commands;
             if (commands.size() > 0) {
-                System.out.println(commands.get(commands.size() - 1));
-                String listOfWords = label.getText();
-                int index= listOfWords.lastIndexOf("MOVE");
-                label.setText(listOfWords.substring(0, index));
-                commands.remove(commands.size() - 1);
+                String listOfInstructions = getLabelText();
+                deleteInstruction(listOfInstructions, commands);
             }
             else {
                 InfoBox.display("Warning", "No instruction to delete");
@@ -54,6 +52,14 @@ public class ListOfInstructions implements SceneElement {
         listOfInstructions.add(delete, 0, 1);
 
         return listOfInstructions;
+    }
+
+    private void deleteInstruction(String listOfWords, List<Directions> commands) {
+        System.out.println(commands.get(commands.size() - 1));
+
+        int index= listOfWords.lastIndexOf("MOVE");
+        setLabelText(listOfWords.substring(0, index));
+        commands.remove(commands.size() - 1);
     }
 
     @Override

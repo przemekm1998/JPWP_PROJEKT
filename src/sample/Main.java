@@ -4,14 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import sample.Objects.Player;
 import sample.scenes.GameView;
 import sample.scenes.MenuView;
-import sample.scenes.gameview.Directions;
-import sample.scenes.gameview.GameMap;
+import sample.scenes.gameview.controlling.Directions;
 
 import java.util.ArrayList;
 import java.util.List;

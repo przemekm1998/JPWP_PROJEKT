@@ -1,26 +1,15 @@
-package sample.scenes.gameview;
+package sample.scenes.gameview.elements;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import sample.Objects.Grass;
-import sample.Objects.Player;
-import sample.scenes.GameView;
-import sample.scenes.SceneElement;
+import sample.scenes.interfaces.SceneElement;
+import sample.scenes.gameview.controlling.Directions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
 
 import static java.lang.Thread.sleep;
 
@@ -67,8 +56,6 @@ public class Instructions implements SceneElement {
         instructions.add(left, 0, 2);
         instructions.add(right, 0, 3);
         instructions.add(down, 0, 4);
-
-
 
         return instructions;
     }

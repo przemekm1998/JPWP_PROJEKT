@@ -1,18 +1,17 @@
 package sample.scenes;
 
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import net.miginfocom.layout.Grid;
-import sample.scenes.gameview.GameMap;
-import sample.scenes.gameview.Instructions;
-import sample.scenes.gameview.ListOfInstructions;
-import sample.scenes.gameview.Score;
+import sample.scenes.gameview.elements.GameMap;
+import sample.scenes.gameview.elements.Instructions;
+import sample.scenes.gameview.elements.ListOfInstructions;
+import sample.scenes.gameview.elements.Score;
+import sample.scenes.interfaces.SceneView;
 
 import java.util.Random;
 
-public class GameView implements SceneView{
+public class GameView implements SceneView {
     // Rand for food
     static Random rand = new Random();
 

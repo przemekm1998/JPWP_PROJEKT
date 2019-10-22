@@ -1,4 +1,4 @@
-package sample.scenes.gameview;
+package sample.scenes.gameview.elements;
 
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -7,51 +7,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.InfoBox;
-import sample.Objects.MapObject;
-import sample.Objects.Player;
+import sample.scenes.gameview.controlling.Directions;
+import sample.scenes.gameview.objects.MapObject;
+import sample.scenes.gameview.objects.Player;
 import sample.scenes.GameView;
-import sample.scenes.SceneElement;
+import sample.scenes.interfaces.SceneElement;
 import java.util.List;
 
 public class Score implements SceneElement {
-
-    public static int score = 0;
-    public static Label scoreLabel = new Label("Score : " + score);
-
-    public static int steps = 0;
-    public static Label stepsLabel = new Label("Steps : " + steps);
-
-    public static Label getscoreLabel() {
-        return scoreLabel;
-    }
-
-    public static void setscoreLabel(int score) {
-        scoreLabel.setText("Score : " + score);
-    }
-
-    public static Label getstepsLabel() {
-        return stepsLabel;
-    }
-
-    public static void setStepsLabel(int steps) {
-        stepsLabel.setText("Steps : " + steps);
-    }
-
-    public static int getScore() {
-        return score;
-    }
-
-    public static void setScore(int score) {
-        Score.score = score;
-    }
-
-    public static int getSteps() {
-        return score;
-    }
-
-    public static void setSteps(int steps) {
-        Score.steps = score;
-    }
 
     @Override
     public Pane createWindow() {
@@ -69,24 +32,10 @@ public class Score implements SceneElement {
             } else {
                 new Thread(() -> {
                     for (Directions dir : commands) {
-                        try {
-                            Thread.sleep(500); // Wait for 1 sec before updating the color
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-
-                        Platform.runLater(() -> {
-                            move(dir, player, gameMap);
-                            gameMap.setRowIndex(player.getImgView(), player.getPosY());
-                            gameMap.setColumnIndex(player.getImgView(), player.getPosX());
-                            if(player.getPosX() == 4) {
-                                commands.clear();
-                                ListOfInstructions.label.setText("");
-                                InfoBox.display("Won!", "You've won!");
-                            }
-                        });
+                        runGame(dir, player, gameMap);
                     }
                 }).start();
+                InfoBox.display("Lost", "You've lost!");
             }
 
 //            gameMap.getChildren().remove(player.getImgView());
@@ -121,10 +70,7 @@ public class Score implements SceneElement {
         score.setAlignment(Pos.CENTER);
         score.setPrefHeight(getHeight());
 
-
         score.add(start, 0, 0);
-        score.add(scoreLabel, 0, 1);
-        score.add(stepsLabel, 0, 2);
 
         return score;
     }
@@ -137,6 +83,25 @@ public class Score implements SceneElement {
     @Override
     public int getHeight() {
         return 100;
+    }
+
+    private void runGame(Directions dir, Player player, GridPane gameMap){
+        boolean runGame = true;
+
+        try {
+            Thread.sleep(500); // Wait for 1 sec before updating the color
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
+        Platform.runLater(() -> {
+            move(dir, player, gameMap);
+            gameMap.setRowIndex(player.getImgView(), player.getPosY());
+            gameMap.setColumnIndex(player.getImgView(), player.getPosX());
+            if(player.getPosX() == 4) {
+                InfoBox.display("Win", "You've won!");
+            }
+        });
     }
 
     private void move(Directions direction, MapObject object, GridPane gameMap) {

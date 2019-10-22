@@ -1,14 +1,14 @@
-package sample.scenes.gameview;
+package sample.scenes.gameview.elements;
 
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.jetbrains.annotations.NotNull;
-import sample.Objects.Grass;
-import sample.Objects.MapObject;
-import sample.Objects.Player;
-import sample.scenes.SceneElement;
+import sample.scenes.gameview.objects.Grass;
+import sample.scenes.gameview.objects.MapObject;
+import sample.scenes.gameview.objects.Player;
+import sample.scenes.interfaces.SceneElement;
 
 import java.util.ArrayList;
 import java.util.List;

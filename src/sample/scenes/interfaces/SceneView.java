@@ -1,4 +1,4 @@
-package sample.scenes;
+package sample.scenes.interfaces;
 
 import javafx.scene.Scene;
 

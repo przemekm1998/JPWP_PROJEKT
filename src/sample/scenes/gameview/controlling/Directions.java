@@ -1,4 +1,4 @@
-package sample.scenes.gameview;
+package sample.scenes.gameview.controlling;
 
 public enum Directions {
     LEFT,
