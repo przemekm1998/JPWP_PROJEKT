@@ -4,7 +4,6 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import org.jetbrains.annotations.NotNull;
 import sample.scenes.gameview.objects.Grass;
 import sample.scenes.gameview.objects.MapObject;
 import sample.scenes.gameview.objects.Player;
@@ -29,7 +28,6 @@ public class GameMap implements SceneElement {
         return generateMap(playerObject, grassObject);
     }
 
-    @NotNull
     private GridPane generateMap(Player playerObject, Grass grassObject) {
 
         Function<GridPane, GridPane> mapFill = (gameMap) -> {
