@@ -21,6 +21,7 @@ public class MenuView {
         Label label = new Label("Welcome to Forest Paths!");
         Label label1 = new Label("Select difficulty level");
 
+        // TODO -- saving variable of choice
         ChoiceBox<String> choiceBox = new ChoiceBox<>();
         choiceBox.getItems().addAll("Easy", "Medium", "Hard");
         choiceBox.setValue("Easy");
@@ -28,13 +29,11 @@ public class MenuView {
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
             primaryStage.setScene(Main.game);
-            System.out.println("Eluwa byku2");
         });
 
         Button exitButton = new Button("Exit Game");
         exitButton.setOnAction(e -> {
             primaryStage.close();
-            System.out.println("Eluwa byku");
         });
 
         menuOptions.getChildren().addAll(label, label1, choiceBox, startButton,

@@ -17,8 +17,6 @@ public class GameView implements SceneView {
 
     static boolean gameOver = false;
 
-    public static GridPane listOfInstructions;
-
     public static GridPane gameMap;
 
     @Override
@@ -28,8 +26,6 @@ public class GameView implements SceneView {
         Instructions instructions = new Instructions();
         Score scoreView = new Score();
         ListOfInstructions list = new ListOfInstructions();
-
-        gameMap = (GridPane) mapView.createWindow();
 
         BorderPane borderPane = new BorderPane();
         borderPane.setCenter(mapView.createWindow());

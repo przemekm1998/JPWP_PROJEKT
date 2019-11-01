@@ -28,7 +28,9 @@ public class ListOfInstructions implements SceneElement {
         Button delete = new Button("DELETE LAST INSTRUCTION");
         delete.setMinWidth(100);
         delete.setOnAction(e -> {
+
             List<Directions> commands = Instructions.commands;
+
             if (commands.size() > 0) {
                 String listOfInstructions = getLabelText();
                 deleteInstruction(listOfInstructions, commands);
@@ -36,6 +38,7 @@ public class ListOfInstructions implements SceneElement {
             else {
                 InfoBox.display("Warning", "No instruction to delete");
             }
+
         });
 
         Label list = new Label("List of Instructions");
@@ -54,7 +57,7 @@ public class ListOfInstructions implements SceneElement {
         return listOfInstructions;
     }
 
-    private void deleteInstruction(String listOfWords, List<Directions> commands) {
+    public static void deleteInstruction(String listOfWords, List<Directions> commands) {
         System.out.println(commands.get(commands.size() - 1));
 
         int index= listOfWords.lastIndexOf("MOVE");

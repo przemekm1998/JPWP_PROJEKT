@@ -4,43 +4,63 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import sample.scenes.gameview.objects.Grass;
-import sample.scenes.gameview.objects.MapObject;
-import sample.scenes.gameview.objects.Player;
+import sample.scenes.gameview.objects.*;
 import sample.scenes.interfaces.SceneElement;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 public class GameMap implements SceneElement {
-    public static Player playerObject;
-    public static List<MapObject> list = new ArrayList<>();
 
-    public static final int MAX_WIDTH = 6;
-    public static final int MAX_HEIGHT = 6;
+    // map boundaries
+    private static final int MAX_WIDTH = 6;
+    private static final int MAX_HEIGHT = 6;
+
+    private static Player playerObject = new Player();
+    private static Finish finishObject = new Finish();
+
+    // array of filled coordinates by objects
+    private static MapObject[][] takenCoordinates = new MapObject[MAX_HEIGHT + 1][MAX_WIDTH + 1];
 
     @Override
     public Pane createWindow() {
-        playerObject = new Player();
-        Grass grassObject = new Grass();
+        List<MapObject> activeMapElements = Arrays.asList(
+                new Stone(),
+                new Tree(),
+                new BonusPoints()
+        );
 
-        return generateMap(playerObject, grassObject);
+        return generateMap(activeMapElements);
     }
 
-    private GridPane generateMap(Player playerObject, Grass grassObject) {
+    private GridPane generateMap(List<MapObject> activeMapElements) {
+
+        // setting player's starting point
+        playerObject.setPosX(MAX_WIDTH / 2);
+        playerObject.setPosY(MAX_HEIGHT);
+        takenCoordinates[playerObject.getPosY()][playerObject.getPosX()] = playerObject;
+
+        // setting finish point
+        finishObject.setPosX(MAX_WIDTH / 2);
+        finishObject.setPosY(0);
+        takenCoordinates[finishObject.getPosY()][finishObject.getPosX()] = finishObject;
 
         Function<GridPane, GridPane> mapFill = (gameMap) -> {
-            for(int width = 0; width <= MAX_WIDTH; width++) {
-                for(int height = 0; height <= MAX_HEIGHT; height++) {
+            // Map fill with grass
+            Grass grassObject = new Grass();
+
+            for (int width = 0; width <= MAX_WIDTH; width++) {
+                for (int height = 0; height <= MAX_HEIGHT; height++) {
                     gameMap.add(new ImageView(grassObject.getImg()), width, height, 1, 1);
-                    list.add(new Grass(width, height));
                 }
             }
 
-            playerObject.setPosX(MAX_WIDTH/2);
-            playerObject.setPosY(MAX_HEIGHT);
+            // Generating bonus points, random points and obstacles
+            for (MapObject object : activeMapElements) {
+                objectsRandomizer(object, 3, gameMap);
+            }
 
+            gameMap.add(finishObject.getImgView(), finishObject.getPosX(), finishObject.getPosY());
             gameMap.add(playerObject.getImgView(), playerObject.getPosX(), playerObject.getPosY());
 
             return gameMap;
@@ -55,6 +75,53 @@ public class GameMap implements SceneElement {
         return map;
     }
 
+    private void objectsRandomizer(MapObject objectToGenerate, int amount, GridPane gameMap) {
+        Random rand = new Random();
+        int posX, posY;
+        boolean duplicate;
+
+        // Generating random coordinates for active objects
+        for (int i = 0; i < amount; i++) {
+            do {
+                duplicate = false;
+                posY = rand.nextInt(((MAX_HEIGHT - 1) - 1) + 1) + 1;
+                posX = rand.nextInt(((MAX_WIDTH - 1) - 1) + 1) + 1;
+
+                // Check if coordinates are not already taken
+                if (takenCoordinates[posY][posX] != null) {
+                    duplicate = true;
+                }
+            } while (duplicate);
+
+            takenCoordinates[posY][posX] = objectToGenerate;
+
+            gameMap.add(new ImageView(objectToGenerate.getImg()), posX, posY);
+        }
+    }
+
+    public static Player getPlayerObject() {
+        return playerObject;
+    }
+
+    public static void setPlayerObject(Player playerObject) {
+        GameMap.playerObject = playerObject;
+    }
+
+    public static Finish getFinishObject() {
+        return finishObject;
+    }
+
+    public static void setFinishObject(Finish finishObject) {
+        GameMap.finishObject = finishObject;
+    }
+
+    public static MapObject[][] getTakenCoordinates() {
+        return takenCoordinates;
+    }
+
+    public static void setTakenCoordinates(MapObject[][] takenCoordinates) {
+        GameMap.takenCoordinates = takenCoordinates;
+    }
 
     @Override
     public int getWidth() {

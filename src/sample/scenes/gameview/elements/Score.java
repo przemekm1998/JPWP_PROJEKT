@@ -8,6 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.InfoBox;
 import sample.scenes.gameview.controlling.Directions;
+import sample.scenes.gameview.objects.Finish;
 import sample.scenes.gameview.objects.MapObject;
 import sample.scenes.gameview.objects.Player;
 import sample.scenes.GameView;
@@ -25,42 +26,17 @@ public class Score implements SceneElement {
             Player player = GameMap.playerObject;
             GridPane gameMap = GameView.gameMap;
             List<Directions> commands = Instructions.commands;
-            List<MapObject> bonusPoints = GameMap.list;
+            List<MapObject> bonusPoints = GameMap.bonusPoints;
 
             if (commands.isEmpty()) {
                 InfoBox.display("Warning", "No instructions to run");
             } else {
                 new Thread(() -> {
                     for (Directions dir : commands) {
-                        runGame(dir, player, gameMap);
+                        runGame(dir, player, gameMap);;
                     }
                 }).start();
-                InfoBox.display("Lost", "You've lost!");
             }
-
-//            gameMap.getChildren().remove(player.getImgView());
-//
-//            if (commands.isEmpty()) {
-//                InfoBox.display("Warning", "No instructions to run");
-//            } else {
-//                for (Directions dir : commands) {
-//                    move(dir, player, gameMap);
-//
-//                    gameMap.setRowIndex(player.getImgView(), player.getPosY());
-//                    gameMap.setColumnIndex(player.getImgView(), player.getPosX());
-//
-
-//
-//                    int bonus = checkBonusPoints(bonusPoints, player);
-//                    int newPoints = calculateScore(bonus, getScore());
-//                    setScore(newPoints);
-//                    setscoreLabel(getScore());
-//                }
-//                commands.clear();
-//                ListOfInstructions.label.setText("");
-//            }
-//
-//            gameMap.add(player.getImgView(), player.getPosX(), player.getPosY());
 
         });
 
@@ -87,6 +63,7 @@ public class Score implements SceneElement {
 
     private void runGame(Directions dir, Player player, GridPane gameMap){
         boolean runGame = true;
+        Finish finish = GameMap.finishObject;
 
         try {
             Thread.sleep(500); // Wait for 1 sec before updating the color
@@ -98,7 +75,7 @@ public class Score implements SceneElement {
             move(dir, player, gameMap);
             gameMap.setRowIndex(player.getImgView(), player.getPosY());
             gameMap.setColumnIndex(player.getImgView(), player.getPosX());
-            if(player.getPosX() == 4) {
+            if(player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
                 InfoBox.display("Win", "You've won!");
             }
         });

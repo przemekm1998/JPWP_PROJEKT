@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.javafx.scene.traversal.Direction;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.scenes.gameview.controlling.Directions;
+import sample.scenes.gameview.elements.Instructions;
+import sample.scenes.gameview.elements.ListOfInstructions;
 
 public class InfoBox {
 
@@ -23,11 +27,12 @@ public class InfoBox {
 
         //Create two buttons
         Button okButton = new Button("Ok z resetem");
-        Button okButton2 = new Button("Ok bez resetu");
 
         okButton.setOnAction(e -> {
             window.close();
             Main.mainWindow.close();
+            ListOfInstructions.label.setText("");
+            Instructions.commands.clear();
             Platform.runLater( () -> {
                 try {
                     new Main().start( new Stage() );
@@ -37,12 +42,8 @@ public class InfoBox {
             });
         });
 
-        okButton2.setOnAction(e -> {
-            window.close();
-        });
-
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, okButton, okButton2);
+        layout.getChildren().addAll(label, okButton);
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
