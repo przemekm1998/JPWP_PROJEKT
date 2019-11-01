@@ -18,12 +18,10 @@
 * Checking the loosing situation
 * Setting additional points after reaching particular objects
 * Creating interface for every active objects causing action after reaching them
+* Case for reaching the boundaries of the map
 
 #### Instructions
 * ~~Case for empty list of orders~~
-* Case for reaching the boundaries of the map
-* Case for stumbling upon an obstacle
-* Case for reaching the bonus points
 * ~~Showing every move for 0.5s~~
 
 #### ~~MAP~~
