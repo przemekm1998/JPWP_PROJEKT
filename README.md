@@ -19,10 +19,11 @@
 * Setting additional points after reaching particular objects
 * Creating interface for every active objects causing action after reaching them
 * Case for reaching the boundaries of the map
+* ~~Showing every move for 0.5s~~
 
 #### Instructions
 * ~~Case for empty list of orders~~
-* ~~Showing every move for 0.5s~~
+* ~~Deleting last instruction~~
 
 #### ~~MAP~~
 * ~~Map Generator~~
