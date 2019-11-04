@@ -1,6 +1,6 @@
 package sample.scenes.gameview.objects;
 
-public class Stone extends MapObject {
+public class Stone extends MapObject implements ActiveObject {
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\stone.png";
 
     public Stone(int x, int y){
