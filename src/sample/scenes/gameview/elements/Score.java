@@ -25,16 +25,16 @@ public class Score implements SceneElement {
         Button start = new Button("START");
         start.setMinWidth(100);
         start.setOnAction(e -> {
-            Player player = GameMap.getPlayerObject();
-            GridPane gameMap = GameView.gameMap;
+//            Player player = GameMap.getPlayerObject();
+//            GridPane gameMap = GameView.gameMap;
             List<Directions> commands = Instructions.commands;
-//            List<MapObject> bonusPoints = GameMap.bonusPoints;
-            Finish finish = GameMap.getFinishObject();
+////            List<MapObject> bonusPoints = GameMap.bonusPoints;
+//            Finish finish = GameMap.getFinishObject();
 
             if (commands.isEmpty()) {
                 InfoBox.display("Warning", "No instructions to run");
             } else {
-                InfoBox.display("Win", "You've won!");
+                GameFlow.runFlow();
 //                new Thread(() -> {
 //                    for (Directions dir : commands) {
 //                        runGame(dir, player, gameMap);;

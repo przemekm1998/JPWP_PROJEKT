@@ -74,6 +74,7 @@ public class GameMap implements SceneElement {
     }
 
     private void grassFill(GridPane gameMap) {
+
         for (int width = 0; width <= MAX_WIDTH; width++) {
             for (int height = 0; height <= MAX_HEIGHT; height++) {
 
@@ -133,7 +134,7 @@ public class GameMap implements SceneElement {
         return playerObject;
     }
 
-    public static void setPlayerObject(Player playerObject) {
+    private static void setPlayerObject(Player playerObject) {
         GameMap.playerObject = playerObject;
     }
 
@@ -141,7 +142,7 @@ public class GameMap implements SceneElement {
         return finishObject;
     }
 
-    public static void setFinishObject(Finish finishObject) {
+    private static void setFinishObject(Finish finishObject) {
         GameMap.finishObject = finishObject;
     }
 
@@ -149,7 +150,7 @@ public class GameMap implements SceneElement {
         return takenCoordinates;
     }
 
-    public static void setTakenCoordinates(MapObject[][] takenCoordinates) {
+    private static void setTakenCoordinates(MapObject[][] takenCoordinates) {
         GameMap.takenCoordinates = takenCoordinates;
     }
 

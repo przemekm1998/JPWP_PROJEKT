@@ -54,10 +54,6 @@ public class GameFlow {
                     // TODO -- naprawic ta kaszane
                     move(dir, player, gameMap);
                 }
-
-
-
-
         }
 
 //        private void restartFlow(){
@@ -75,12 +71,12 @@ public class GameFlow {
 //            });
 //        }
 
-//        public void checkWin(){
-//            Finish finish = GameMap.getFinishObject();
-//            Platform.runLater(() -> {
-//                ConfirmBox.display("Loose", "You've lost!");
-//                });
-//        }
+        public void checkWin(Finish finish){
+
+            Platform.runLater(() -> {
+                ConfirmBox.display("Loose", "You've lost!");
+                });
+        }
 
 //        public void stop(){
 //            exit = true;
