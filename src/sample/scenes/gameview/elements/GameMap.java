@@ -16,14 +16,17 @@ public class GameMap implements SceneElement {
     private static final int MAX_WIDTH = 6;
     private static final int MAX_HEIGHT = 6;
 
-    private static Player playerObject = new Player();
-    private static Finish finishObject = new Finish();
+    private static Player playerObject;
+    private static Finish finishObject;
 
     // array of filled coordinates by objects
     private static MapObject[][] takenCoordinates = new MapObject[MAX_HEIGHT + 1][MAX_WIDTH + 1];
 
     @Override
     public Pane createWindow() {
+        playerObject = new Player();
+        finishObject = new Finish();
+
         List<MapObject> activeMapElements = Arrays.asList(
                 new Stone(),
                 new Tree(),

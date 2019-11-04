@@ -1,5 +1,6 @@
 package sample.scenes;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,7 +29,14 @@ public class MenuView {
 
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
-            primaryStage.setScene(Main.game);
+            Platform.runLater( () -> {
+                GameView gameView = new GameView();
+                Scene game = gameView.createWindow();
+                primaryStage.setScene(game);
+            });
+//            GameView gameView = new GameView();
+//            Scene game = gameView.createWindow();
+//            primaryStage.setScene(game);
         });
 
         Button exitButton = new Button("Exit Game");

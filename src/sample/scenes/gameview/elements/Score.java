@@ -7,12 +7,15 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.InfoBox;
+import sample.scenes.gameview.GameFlow;
 import sample.scenes.gameview.controlling.Directions;
 import sample.scenes.gameview.objects.Finish;
 import sample.scenes.gameview.objects.MapObject;
 import sample.scenes.gameview.objects.Player;
 import sample.scenes.GameView;
 import sample.scenes.interfaces.SceneElement;
+
+import java.beans.EventHandler;
 import java.util.List;
 
 public class Score implements SceneElement {
@@ -22,24 +25,29 @@ public class Score implements SceneElement {
         Button start = new Button("START");
         start.setMinWidth(100);
         start.setOnAction(e -> {
-
-            Player player = GameMap.playerObject;
+            Player player = GameMap.getPlayerObject();
             GridPane gameMap = GameView.gameMap;
             List<Directions> commands = Instructions.commands;
-            List<MapObject> bonusPoints = GameMap.bonusPoints;
+//            List<MapObject> bonusPoints = GameMap.bonusPoints;
+            Finish finish = GameMap.getFinishObject();
 
             if (commands.isEmpty()) {
                 InfoBox.display("Warning", "No instructions to run");
             } else {
-                new Thread(() -> {
-                    for (Directions dir : commands) {
-                        runGame(dir, player, gameMap);;
-                    }
-                }).start();
+                InfoBox.display("Win", "You've won!");
+//                new Thread(() -> {
+//                    for (Directions dir : commands) {
+//                        runGame(dir, player, gameMap);;
+//                    }
+//                    Platform.runLater(() -> {
+//                        if(player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
+//                            e.consume();
+//                            InfoBox.display("Win", "You've won!");
+//                        }
+//                    });
+//                }).start();
             }
-
         });
-
 
         GridPane score = new GridPane();
         score.setVgap(10);
@@ -63,7 +71,7 @@ public class Score implements SceneElement {
 
     private void runGame(Directions dir, Player player, GridPane gameMap){
         boolean runGame = true;
-        Finish finish = GameMap.finishObject;
+        Finish finish = GameMap.getFinishObject();
 
         try {
             Thread.sleep(500); // Wait for 1 sec before updating the color
@@ -73,11 +81,6 @@ public class Score implements SceneElement {
 
         Platform.runLater(() -> {
             move(dir, player, gameMap);
-            gameMap.setRowIndex(player.getImgView(), player.getPosY());
-            gameMap.setColumnIndex(player.getImgView(), player.getPosX());
-            if(player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
-                InfoBox.display("Win", "You've won!");
-            }
         });
     }
 
@@ -105,25 +108,8 @@ public class Score implements SceneElement {
                 object.setPosY(y2);
                 break;
         }
+
+        gameMap.setRowIndex(object.getImgView(), object.getPosY());
+        gameMap.setColumnIndex(object.getImgView(), object.getPosX());
     }
-
-    private int calculateScore(int addedPoints, int points) {
-        int point = points;
-        point += addedPoints;
-        return point;
-    }
-
-    private int checkBonusPoints(List<MapObject> bonusPoints, Player player) {
-        int points = 0;
-
-        for (MapObject object : bonusPoints) {
-            if (object.getPosX() == player.getPosX() && object.getPosY() == player.getPosY()) {
-                System.out.println(" +1 point ");
-                points += 5;
-            }
-        }
-
-        return points;
-    }
-
 }

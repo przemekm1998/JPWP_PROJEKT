@@ -6,10 +6,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.scenes.GameView;
 import sample.scenes.gameview.controlling.Directions;
+import sample.scenes.gameview.elements.GameMap;
 import sample.scenes.gameview.elements.Instructions;
 import sample.scenes.gameview.elements.ListOfInstructions;
 
@@ -26,19 +30,24 @@ public class InfoBox {
         label.setText(message);
 
         //Create two buttons
-        Button okButton = new Button("Ok z resetem");
+        Button okButton = new Button("Ok");
 
         okButton.setOnAction(e -> {
             window.close();
-            Main.mainWindow.close();
-            ListOfInstructions.label.setText("");
-            Instructions.commands.clear();
+//            Main.mainWindow.setScene(Main.menu);
             Platform.runLater( () -> {
-                try {
-                    new Main().start( new Stage() );
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+//                ListOfInstructions.label.setText("");
+//                Instructions.commands.clear();
+//                GameMap map = new GameMap();
+//                GameView.gameMap = (GridPane) map.createWindow();
+                Main.mainWindow.close();
+                Main.mainWindow.setScene(Main.menu);
+                Main.mainWindow.show();
+//                try {
+//                    new Main().start( Main.mainWindow );
+//                } catch (Exception ex) {
+//                    ex.printStackTrace();
+//                }
             });
         });
 

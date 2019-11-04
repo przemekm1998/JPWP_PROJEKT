@@ -19,10 +19,11 @@ public class GameView implements SceneView {
 
     public static GridPane gameMap;
 
+    public static GameMap mapView = new GameMap();
+
     @Override
     public Scene createWindow(){
 
-        GameMap mapView = new GameMap();
         Instructions instructions = new Instructions();
         Score scoreView = new Score();
         ListOfInstructions list = new ListOfInstructions();
