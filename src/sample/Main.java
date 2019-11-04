@@ -23,6 +23,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         mainWindow = primaryStage;
 
+        mainWindow.setResizable(false);
+
         mainWindow.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();

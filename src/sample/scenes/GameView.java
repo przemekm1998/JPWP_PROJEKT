@@ -39,11 +39,11 @@ public class GameView implements SceneView {
 
     @Override
     public int getWidth() {
-        return 450;
+        return 1280;
     }
 
     @Override
     public int getHeight() {
-        return 450;
+        return 720;
     }
 }

@@ -1,5 +1,6 @@
 package sample.scenes.gameview.elements;
 
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -54,17 +55,30 @@ public class GameMap implements SceneElement {
 
             for (int width = 0; width <= MAX_WIDTH; width++) {
                 for (int height = 0; height <= MAX_HEIGHT; height++) {
-                    gameMap.add(new ImageView(grassObject.getImg()), width, height, 1, 1);
+                    final int finalWidth = width;
+                    final int finalHeight = height;
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+                            gameMap.add(new ImageView(grassObject.getImg()), finalWidth, finalHeight, 1, 1);
+                        }
+                    });
+
                 }
             }
 
             // Generating bonus points, random points and obstacles
-            for (MapObject object : activeMapElements) {
-                objectsRandomizer(object, 3, gameMap);
-            }
+//            for (MapObject object : activeMapElements) {
+//                objectsRandomizer(object, 3, gameMap);
+//            }
 
-            gameMap.add(finishObject.getImgView(), finishObject.getPosX(), finishObject.getPosY());
-            gameMap.add(playerObject.getImgView(), playerObject.getPosX(), playerObject.getPosY());
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    gameMap.add(finishObject.getImgView(), finishObject.getPosX(), finishObject.getPosY());
+                    gameMap.add(playerObject.getImgView(), playerObject.getPosX(), playerObject.getPosY());
+                }
+            });
+//
+
 
             return gameMap;
         };
@@ -98,7 +112,13 @@ public class GameMap implements SceneElement {
 
             takenCoordinates[posY][posX] = objectToGenerate;
 
-            gameMap.add(new ImageView(objectToGenerate.getImg()), posX, posY);
+            int finalPosX = posX;
+            int finalPosY = posY;
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    gameMap.add(new ImageView(objectToGenerate.getImg()), finalPosX, finalPosY);
+                }
+            });
         }
     }
 
@@ -128,11 +148,11 @@ public class GameMap implements SceneElement {
 
     @Override
     public int getWidth() {
-        return 0;
+        return 500;
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return 500;
     }
 }
