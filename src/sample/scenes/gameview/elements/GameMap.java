@@ -59,16 +59,7 @@ public class GameMap implements SceneElement {
     private void mapFill(GridPane gameMap, List<MapObject> activeMapElements) {
 
         // Filling the map with the grass
-        for (int width = 0; width <= MAX_WIDTH; width++) {
-            for (int height = 0; height <= MAX_HEIGHT; height++) {
-                final int finalWidth = width;
-                final int finalHeight = height;
-
-                Platform.runLater(() -> {
-                    gameMap.add(new Grass().getImgView(), finalWidth, finalHeight);
-                });
-            }
-        }
+        grassFill(gameMap);
 
         // Generating bonus points, random points and obstacles
         for (MapObject object : activeMapElements) {
@@ -80,6 +71,20 @@ public class GameMap implements SceneElement {
             gameMap.add(playerObject.getImgView(), playerObject.getPosX(), playerObject.getPosY());
             gameMap.add(finishObject.getImgView(), finishObject.getPosX(), finishObject.getPosY());
         });
+    }
+
+    private void grassFill(GridPane gameMap) {
+        for (int width = 0; width <= MAX_WIDTH; width++) {
+            for (int height = 0; height <= MAX_HEIGHT; height++) {
+
+                final int finalWidth = width;
+                final int finalHeight = height;
+
+                Platform.runLater(() -> {
+                    gameMap.add(new Grass().getImgView(), finalWidth, finalHeight);
+                });
+            }
+        }
     }
 
     // Generating objects with random coordinates
