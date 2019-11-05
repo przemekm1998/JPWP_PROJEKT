@@ -37,7 +37,7 @@ public class InfoBox {
             Main.mainWindow.close();
             Platform.runLater( () -> {
                 ListOfInstructions.label.setText("");
-                Instructions.commands.clear();
+//                Instructions.getCommands().clear();
                 try {
                     new Main().start( new Stage() );
                 } catch (Exception ex) {

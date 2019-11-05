@@ -12,6 +12,7 @@ import sample.scenes.gameview.controlling.Directions;
 import sample.scenes.gameview.elements.GameMap;
 import sample.scenes.gameview.elements.Instructions;
 import sample.scenes.gameview.elements.ListOfInstructions;
+import sample.scenes.gameview.objects.ActiveObject;
 import sample.scenes.gameview.objects.Finish;
 import sample.scenes.gameview.objects.MapObject;
 import sample.scenes.gameview.objects.Player;
@@ -21,12 +22,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameFlow {
     public static synchronized void runFlow() {
-
-        Player player = GameMap.getPlayerObject();
-        GridPane gameMap = GameView.gameMap; // TODO -- change to getter
-        List<Directions> commands = Instructions.commands; // TODO -- change to getter
-        MapObject[][] takenCoordinates = GameMap.getTakenCoordinates();
-
         Action myAction = new Action();
 
         Thread t1 = new Thread(myAction, "T1");
@@ -34,18 +29,27 @@ public class GameFlow {
         t1.start();
     }
 
-    private static class Action implements Runnable{
-        private volatile boolean exit = false;
+    public static class Action implements Runnable {
+        private volatile boolean exit;
+
+        private static int score;
+        private static int steps;
 
         Player player = GameMap.getPlayerObject();
-        GridPane gameMap = GameView.gameMap; // TODO -- change to getter
-        List<Directions> commands = Instructions.commands; // TODO -- change to getter
+        GridPane gameMap = GameView.getGameMap();
+        List<Directions> commands = Instructions.getCommands();
         MapObject[][] takenCoordinates = GameMap.getTakenCoordinates();
 
-        public void run() {
-            Finish finish = GameMap.getFinishObject();
+        public static boolean gameWon;
 
-            while(!exit) {
+        public void run() {
+            exit = false;
+            gameWon = false;
+
+            setScore(0);
+            setSteps(0);
+
+            while (!exit) {
                 for (Directions dir : commands) {
                     try {
                         Thread.sleep(500); // Wait for 1 sec before updating the color
@@ -53,78 +57,105 @@ public class GameFlow {
                         ex.printStackTrace();
                     }
                     move(dir, player, gameMap); // player moves
-                    checkBox(finish);
+                    System.out.println(getSteps());
+                    exit = checkBoxObject(takenCoordinates, player, gameWon);
+                    System.out.println(getScore());
+                    if (exit) {
+                        break;
+                    }
                 }
+                System.out.println("Final score: " + getScore());
+                System.out.println("Final steps: " + getSteps());
+                System.out.println("Final results: " + (getScore() - getSteps()));
                 // when all of the moves are performed and no win is detected
-                if(!exit) {
+                if (!exit) {
                     Platform.runLater(() -> {
                         InfoBox.display("Loose", "You've lost!");
                     });
                     break;
                 }
+                if (exit) {
+                    if(gameWon) {
+                        Platform.runLater(() -> {
+                            InfoBox.display("Eluwa", "You've won!");
+                        });
+                    }
+                    else if(!gameWon) {
+                        Platform.runLater(() -> {
+                            InfoBox.display("Loose", "Przegrana!");
+                        });
+                    }
+
+                }
             }
 
         }
 
+        private static void move(Directions direction, MapObject object, GridPane gameMap) {
 
-        private void checkBox(Finish finish){
-            if(player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
-                Platform.runLater(() -> {
-                    InfoBox.display("Win", "You've won!");
-                });
-                exit = true;
+            switch (direction) {
+                case UP:
+                    int y = object.getPosY();
+                    y -= 1;
+                    object.setPosY(y);
+                    break;
+
+                case LEFT:
+                    int x = object.getPosX();
+                    x -= 1;
+                    object.setPosX(x);
+                    break;
+
+                case RIGHT:
+                    int x2 = object.getPosX();
+                    x2 += 1;
+                    object.setPosX(x2);
+                    break;
+
+                case DOWN:
+                    int y2 = object.getPosY();
+                    y2 += 1;
+                    object.setPosY(y2);
+                    break;
             }
+
+            int steps = getSteps();
+            steps += 1;
+            setSteps(steps);
+
+            gameMap.setRowIndex(object.getImgView(), object.getPosY());
+            gameMap.setColumnIndex(object.getImgView(), object.getPosX());
         }
 
-    private static void move(Directions direction, MapObject object, GridPane gameMap) {
+        private static boolean checkBoxObject(MapObject[][] takenCoordinates, Player player, boolean gameWon) {
 
-        switch (direction) {
-            case UP:
-                int y = object.getPosY();
-                y -= 1;
-                object.setPosY(y);
-                break;
+            boolean exit = false;
 
-            case LEFT:
-                int x = object.getPosX();
-                x -= 1;
-                object.setPosX(x);
-                break;
+            final int playerPosX = player.getPosX();
+            final int playerPosY = player.getPosY();
 
-            case RIGHT:
-                int x2 = object.getPosX();
-                x2 += 1;
-                object.setPosX(x2);
-                break;
-
-            case DOWN:
-                int y2 = object.getPosY();
-                y2 += 1;
-                object.setPosY(y2);
-                break;
-        }
-
-        gameMap.setRowIndex(object.getImgView(), object.getPosY());
-        gameMap.setColumnIndex(object.getImgView(), object.getPosX());
-    }
-
-    private static int calculateScore(int addedPoints, int points) {
-        int point = points;
-        point += addedPoints;
-        return point;
-    }
-
-    private static int checkBonusPoints(List<MapObject> bonusPoints, Player player) {
-        int points = 0;
-
-        for (MapObject object : bonusPoints) {
-            if (object.getPosX() == player.getPosX() && object.getPosY() == player.getPosY()) {
-                System.out.println(" +1 point ");
-                points += 5;
+            if (takenCoordinates[playerPosY][playerPosX] != null) {
+                ActiveObject object = (ActiveObject) takenCoordinates[playerPosY][playerPosX];
+                exit = object.performAction();
             }
+
+            return exit;
         }
 
-        return points;
+        public static int getScore() {
+            return score;
+        }
+
+        public static void setScore(int score) {
+            Action.score = score;
+        }
+
+        public static int getSteps() {
+            return steps;
+        }
+
+        public static void setSteps(int steps) {
+            Action.steps = steps;
+        }
     }
-}
 }

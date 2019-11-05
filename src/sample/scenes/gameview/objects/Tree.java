@@ -1,6 +1,8 @@
 package sample.scenes.gameview.objects;
 
-public class Tree extends MapObject implements ActiveObject {
+import sample.scenes.gameview.GameFlow;
+
+public class Tree extends MapObject implements ActiveObject{
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\tree.png";
 
     public Tree(int x, int y){
@@ -15,4 +17,13 @@ public class Tree extends MapObject implements ActiveObject {
     protected String getImgPath() {
         return IMG_PATH;
     }
+
+    @Override
+    public boolean performAction() {
+        int newScore = GameFlow.Action.getScore();
+        newScore += 5;
+        GameFlow.Action.setScore(newScore);
+        return false;
+    }
+
 }

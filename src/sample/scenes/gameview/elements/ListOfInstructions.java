@@ -29,7 +29,7 @@ public class ListOfInstructions implements SceneElement {
         delete.setMinWidth(100);
         delete.setOnAction(e -> {
 
-            List<Directions> commands = Instructions.commands;
+            List<Directions> commands = Instructions.getCommands();
 
             if (commands.size() > 0) {
                 String listOfInstructions = getLabelText();
