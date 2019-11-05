@@ -34,7 +34,7 @@ public class GameFlow {
         t1.start();
     }
 
-    static class Action implements Runnable{
+    private static class Action implements Runnable{
         private volatile boolean exit = false;
 
         Player player = GameMap.getPlayerObject();
@@ -45,103 +45,36 @@ public class GameFlow {
         public void run() {
             Finish finish = GameMap.getFinishObject();
 
+            while(!exit) {
                 for (Directions dir : commands) {
                     try {
                         Thread.sleep(500); // Wait for 1 sec before updating the color
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                    // TODO -- naprawic ta kaszane
-                    move(dir, player, gameMap);
+                    move(dir, player, gameMap); // player moves
+                    checkBox(finish);
                 }
+                // when all of the moves are performed and no win is detected
+                if(!exit) {
+                    Platform.runLater(() -> {
+                        InfoBox.display("Loose", "You've lost!");
+                    });
+                    break;
+                }
+            }
+
         }
 
-//        private void restartFlow(){
-//            AtomicBoolean answer = new AtomicBoolean(false);
-//            Platform.runLater(() -> {
-//                answer.set(ConfirmBox.display("Exit Confirmation",
-//                        "Are you sure you want to exit?"));
-//                if(answer.get()) {
-//                    ListOfInstructions.label.setText("");
-//                    Instructions.commands.clear();
-//
-//                    Main.game = new GameView().createWindow();
-//                    Main.mainWindow.setScene(Main.menu);
-//                }
-//            });
-//        }
 
-        public void checkWin(Finish finish){
-
-            Platform.runLater(() -> {
-                ConfirmBox.display("Loose", "You've lost!");
+        private void checkBox(Finish finish){
+            if(player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
+                Platform.runLater(() -> {
+                    InfoBox.display("Win", "You've won!");
                 });
+                exit = true;
+            }
         }
-
-//        public void stop(){
-//            exit = true;
-//        }
-//    }
-
-//    private static Thread threadControl(AtomicBoolean shuttingDown) {
-//        Player player = GameMap.getPlayerObject();
-//        GridPane gameMap = GameView.gameMap; // TODO -- change to getter
-//        List<Directions> commands = Instructions.commands; // TODO -- change to getter
-//        MapObject[][] takenCoordinates = GameMap.getTakenCoordinates();
-//
-//        Thread thread = new Thread(() -> {
-//            Finish finish = GameMap.getFinishObject();
-//
-//            for (Directions dir : commands) {
-//                try {
-//                    Thread.sleep(500); // Wait for 1 sec before updating the color
-//                } catch (InterruptedException ex) {
-//                    ex.printStackTrace();
-//                }
-//
-//                Platform.runLater(() -> {
-//                    move(dir, player, gameMap);
-//                    if (player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
-//                        shuttingDown.set(true);
-//                        System.out.println("wygrana : " + shuttingDown.get());
-//                        InfoBox.display("Win", "You've won!");
-//                    }
-//                });
-//            }
-//
-//            System.out.println("Shutting down po wszystkich ruchach: " + shuttingDown.get());
-//            if (!shuttingDown.get()) {
-//                Platform.runLater(() -> {
-//                    InfoBox.display("Loose", "You've lost!");
-//                });
-//            }
-//        });
-//        return thread;
-//    }
-
-
-//    private static synchronized boolean runGame(Directions dir, Player player, GridPane gameMap) {
-//
-//        Finish finish = GameMap.getFinishObject();
-//        AtomicBoolean shuttingDown = new AtomicBoolean(false);
-
-//        try {
-//            Thread.sleep(500); // Wait for 1 sec before updating the color
-//        } catch (InterruptedException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        Platform.runLater(() -> {
-//            move(dir, player, gameMap);
-//            if (player.getPosX() == finish.getPosX() && player.getPosY() == finish.getPosY()) {
-//                shuttingDown.set(true);
-//                System.out.println("wygrana : " + shuttingDown.get());
-//                info(shuttingDown);
-//            }
-//        });
-//
-//        return shuttingDown.get();
-//    }
 
     private static void move(Directions direction, MapObject object, GridPane gameMap) {
 

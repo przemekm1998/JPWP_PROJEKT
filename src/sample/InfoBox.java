@@ -34,20 +34,15 @@ public class InfoBox {
 
         okButton.setOnAction(e -> {
             window.close();
-//            Main.mainWindow.setScene(Main.menu);
+            Main.mainWindow.close();
             Platform.runLater( () -> {
-//                ListOfInstructions.label.setText("");
-//                Instructions.commands.clear();
-//                GameMap map = new GameMap();
-//                GameView.gameMap = (GridPane) map.createWindow();
-                Main.mainWindow.close();
-                Main.mainWindow.setScene(Main.menu);
-                Main.mainWindow.show();
-//                try {
-//                    new Main().start( Main.mainWindow );
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
+                ListOfInstructions.label.setText("");
+                Instructions.commands.clear();
+                try {
+                    new Main().start( new Stage() );
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             });
         });
 

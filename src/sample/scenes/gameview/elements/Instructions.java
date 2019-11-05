@@ -14,10 +14,12 @@ import java.util.List;
 import static java.lang.Thread.sleep;
 
 public class Instructions implements SceneElement {
-    public static List<Directions> commands = new ArrayList<>();
+    public static List<Directions> commands;
 
     @Override
     public Pane createWindow() {
+
+        commands = new ArrayList<>();
 
         Button top = new Button("UP");
         top.setMinWidth(100);

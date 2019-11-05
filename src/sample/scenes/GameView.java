@@ -12,14 +12,7 @@ import sample.scenes.interfaces.SceneView;
 import java.util.Random;
 
 public class GameView implements SceneView {
-    // Rand for food
-    static Random rand = new Random();
-
-    static boolean gameOver = false;
-
-    public static GridPane gameMap;
-
-    public static GameMap mapView = new GameMap();
+    private static GridPane gameMap;
 
     @Override
     public Scene createWindow(){
@@ -27,14 +20,25 @@ public class GameView implements SceneView {
         Instructions instructions = new Instructions();
         Score scoreView = new Score();
         ListOfInstructions list = new ListOfInstructions();
+        GameMap mapView = new GameMap();
+
+        setGameMap((GridPane) mapView.createWindow());
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setCenter(mapView.createWindow());
+        borderPane.setCenter(getGameMap());
         borderPane.setLeft(instructions.createWindow());
         borderPane.setTop(scoreView.createWindow());
         borderPane.setRight(list.createWindow());
 
         return new Scene(borderPane);
+    }
+
+    public static GridPane getGameMap() {
+        return gameMap;
+    }
+
+    public static void setGameMap(GridPane gameMap) {
+        GameView.gameMap = gameMap;
     }
 
     @Override
