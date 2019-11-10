@@ -3,8 +3,7 @@
 ## TODO
 ### Menu
 * Levels
-* Loading custom level(optional)
-* Maybe a tutorial
+* Tutorial
 
 ### Game
 #### GameView
@@ -14,11 +13,11 @@
 * Failed or ~~successfull~~ pass of the map window
 
 #### GameFlow
-* Checking the win situation
-* Checking the loosing situation
-* Setting additional points after reaching particular objects
-* Creating interface for every active objects causing action after reaching them
-* Case for reaching the boundaries of the map
+* ~~Checking the win situation~~
+* ~~Checking the loosing situation~~
+* ~~Setting additional points after reaching particular objects~~
+* ~~Creating interface for every active objects causing action after reaching them~~
+* ~~Case for reaching the boundaries of the map~~
 * ~~Showing every move for 0.5s~~
 
 #### Instructions
