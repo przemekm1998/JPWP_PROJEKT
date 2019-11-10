@@ -4,6 +4,8 @@ import sample.scenes.gameview.GameFlow;
 import sample.scenes.gameview.objects.core.ActiveObject;
 import sample.scenes.gameview.objects.core.MapObject;
 
+import java.util.Random;
+
 public class Tree extends MapObject implements ActiveObject {
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\tree.png";
 
@@ -23,7 +25,7 @@ public class Tree extends MapObject implements ActiveObject {
     @Override
     public boolean performAction() {
         int newScore = GameFlow.Action.getScore();
-        newScore += 5;
+        newScore += new Random().nextInt((7 - 2) + 1) + 2;
         GameFlow.Action.setScore(newScore);
         return false;
     }

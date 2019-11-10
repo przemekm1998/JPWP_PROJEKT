@@ -3,10 +3,7 @@ package sample.scenes;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import sample.scenes.gameview.elements.GameMap;
-import sample.scenes.gameview.elements.Instructions;
-import sample.scenes.gameview.elements.ListOfInstructions;
-import sample.scenes.gameview.elements.Score;
+import sample.scenes.gameview.elements.*;
 import sample.scenes.interfaces.SceneView;
 
 import java.util.Random;
@@ -21,6 +18,7 @@ public class GameView implements SceneView {
         Score scoreView = new Score();
         ListOfInstructions list = new ListOfInstructions();
         GameMap mapView = new GameMap();
+        BottomPane pane = new BottomPane();
 
         setGameMap((GridPane) mapView.createWindow());
 
@@ -29,6 +27,7 @@ public class GameView implements SceneView {
         borderPane.setLeft(instructions.createWindow());
         borderPane.setTop(scoreView.createWindow());
         borderPane.setRight(list.createWindow());
+        borderPane.setBottom(pane.createWindow());
 
         return new Scene(borderPane);
     }

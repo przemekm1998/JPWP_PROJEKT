@@ -16,7 +16,6 @@ public class ConfirmBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
-        window.setMinWidth(250);
 
         Label label = new Label();
         label.setText(message);
@@ -38,6 +37,7 @@ public class ConfirmBox {
         VBox layout = new VBox(10);
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
+        layout.setPrefWidth(200);
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

@@ -29,14 +29,15 @@ public class InfoBox {
         Label label = new Label();
         label.setText(message);
 
-        Button okButton = new Button("Ok");
+        Button okButton = new Button("Try Again");
 
         okButton.setOnAction(e -> {
             window.close();
             Main.mainWindow.close();
-            Platform.runLater( () -> {
+            Platform.runLater(() -> {
                 try {
-                    new Main().start( new Stage() );
+                    Main.mainWindow.setScene(Main.game);
+                    new Main().start(Main.mainWindow);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

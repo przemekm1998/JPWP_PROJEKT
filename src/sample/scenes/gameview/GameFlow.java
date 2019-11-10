@@ -1,12 +1,14 @@
 package sample.scenes.gameview;
 
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import sample.InfoBox;
 import sample.scenes.GameView;
 import sample.scenes.gameview.controlling.Directions;
 import sample.scenes.gameview.elements.GameMap;
 import sample.scenes.gameview.elements.Instructions;
+import sample.scenes.gameview.elements.Score;
 import sample.scenes.gameview.objects.core.ActiveObject;
 import sample.scenes.gameview.objects.core.MapObject;
 import sample.scenes.gameview.objects.Player;
@@ -80,14 +82,16 @@ public class GameFlow {
 
                 try {
                     move(dir, player, gameMap); // player moves
+                    boolean exit = checkBoxObject(takenCoordinates, player);
+                    setExit(exit);
                 } catch (IllegalArgumentException e) {
                     setExit(true);
                     Action.gameWon = false;
                     break;
                 }
 
-                boolean exit = checkBoxObject(takenCoordinates, player);
-                setExit(exit);
+                Score.setLabelScore(getScore());
+                Score.setLabelSteps(getSteps());
 
                 if (isExit()) {
                     break;
@@ -95,8 +99,7 @@ public class GameFlow {
             }
         }
 
-        private static void move(Directions direction, MapObject object, GridPane gameMap) throws IllegalArgumentException{
-
+        private static void move(Directions direction, MapObject object, GridPane gameMap) throws IllegalArgumentException {
             int newCoordinate = 0;
 
             switch (direction) {
@@ -133,7 +136,7 @@ public class GameFlow {
             gameMap.setColumnIndex(object.getImgView(), object.getPosX());
         }
 
-        private static void cordsCheck(int cordToCheck) throws IllegalArgumentException{
+        private static void cordsCheck(int cordToCheck) throws IllegalArgumentException {
             final int upperBorder = GameMap.getMaxHeight();
             final int lowerBorder = 0;
 
