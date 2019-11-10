@@ -15,6 +15,7 @@ import java.util.List;
 
 public class GameFlow {
     public static synchronized void runFlow() {
+
         Action myAction = new Action();
 
         Thread t1 = new Thread(myAction, "T1");
@@ -23,35 +24,37 @@ public class GameFlow {
     }
 
     public static class Action implements Runnable {
+
         private static boolean exit;
+        private static boolean gameWon;
 
         private static int score;
         private static int steps;
-
-        private static boolean gameWon;
 
         public void run() {
             exit = false;
             gameWon = false;
 
-            setScore(0);
-            setSteps(0);
+            steps = 0;
+            score = 0;
 
-            while (!isExit()) {
-                performSteps();
+            performSteps();
+            gameResult();
+        }
 
-                // player has encountered obstacle or finish
-                if (isExit()) {
-                    if (isGameWon()) {
-                        showResults("Win!", "You've won!"); // player has won
-                    } else if (!isGameWon()) {
-                        showResults("Loose", "You've lost!"); // player has lost because of the obstacle
-                    }
-                }
-            }
+        private static void gameResult() {
             // when all of the moves are performed and no win is detected
             if (!isExit()) {
                 showResults("Loose", "You've lost!");
+            }
+
+            // player has encountered obstacle or finish
+            if (isExit()) {
+                if (isGameWon()) {
+                    showResults("Win!", "You've won!"); // player has won
+                } else if (!isGameWon()) {
+                    showResults("Loose", "You've lost!"); // player has lost because of the obstacle
+                }
             }
         }
 
@@ -124,9 +127,7 @@ public class GameFlow {
 
             cordsCheck(newCoordinate);
 
-            int steps = getSteps();
-            steps += 1;
-            setSteps(steps);
+            incrementSteps();
 
             gameMap.setRowIndex(object.getImgView(), object.getPosY());
             gameMap.setColumnIndex(object.getImgView(), object.getPosX());
@@ -168,8 +169,8 @@ public class GameFlow {
             return steps;
         }
 
-        public static void setSteps(int steps) {
-            Action.steps = steps;
+        public static void incrementSteps() {
+            Action.steps += 1;
         }
 
         public static boolean isGameWon() {

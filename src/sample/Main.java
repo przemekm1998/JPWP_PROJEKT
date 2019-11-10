@@ -32,9 +32,10 @@ public class Main extends Application {
 
         GameView gameView = new GameView();
 
+
         // TODO -- clean this
         menu = MenuView.createMenu(mainWindow);
-//        game = gameView.createWindow();
+        game = gameView.createWindow();
 
         mainWindow.setTitle("Forest Paths");
         mainWindow.setScene(menu);

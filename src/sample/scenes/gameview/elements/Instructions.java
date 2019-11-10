@@ -72,7 +72,7 @@ public class Instructions implements SceneElement {
 
     @Override
     public int getWidth() {
-        return 200;
+        return 150;
     }
 
     @Override

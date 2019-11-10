@@ -30,13 +30,8 @@ public class MenuView {
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
             Platform.runLater( () -> {
-                GameView gameView = new GameView();
-                Scene game = gameView.createWindow();
-                primaryStage.setScene(game);
+                primaryStage.setScene(Main.game);
             });
-//            GameView gameView = new GameView();
-//            Scene game = gameView.createWindow();
-//            primaryStage.setScene(game);
         });
 
         Button exitButton = new Button("Exit Game");

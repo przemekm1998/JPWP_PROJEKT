@@ -44,6 +44,6 @@ public class Score implements SceneElement {
 
     @Override
     public int getHeight() {
-        return 100;
+        return 50;
     }
 }

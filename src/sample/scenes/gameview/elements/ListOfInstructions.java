@@ -13,18 +13,20 @@ import sample.scenes.gameview.controlling.Directions;
 import java.util.List;
 
 public class ListOfInstructions implements SceneElement {
-    public static Label label = new Label("");
+    public static Label label;
 
     public static String getLabelText() {
         return label.getText();
     }
 
     public static void setLabelText(String text) {
-        ListOfInstructions.label.setText(text);;
+        ListOfInstructions.label.setText(text);
     }
 
     @Override
     public Pane createWindow() {
+        label = new Label("");
+
         Button delete = new Button("DELETE LAST INSTRUCTION");
         delete.setMinWidth(100);
         delete.setOnAction(e -> {

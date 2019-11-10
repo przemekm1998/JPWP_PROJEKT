@@ -29,15 +29,12 @@ public class InfoBox {
         Label label = new Label();
         label.setText(message);
 
-        //Create two buttons
         Button okButton = new Button("Ok");
 
         okButton.setOnAction(e -> {
             window.close();
             Main.mainWindow.close();
             Platform.runLater( () -> {
-                ListOfInstructions.label.setText("");
-//                Instructions.getCommands().clear();
                 try {
                     new Main().start( new Stage() );
                 } catch (Exception ex) {

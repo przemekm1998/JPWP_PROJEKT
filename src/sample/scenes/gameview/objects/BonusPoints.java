@@ -1,6 +1,10 @@
 package sample.scenes.gameview.objects;
 
+import javafx.application.Platform;
+import javafx.scene.image.ImageView;
+import sample.scenes.GameView;
 import sample.scenes.gameview.GameFlow;
+import sample.scenes.gameview.elements.GameMap;
 import sample.scenes.gameview.objects.core.ActiveObject;
 import sample.scenes.gameview.objects.core.MapObject;
 
