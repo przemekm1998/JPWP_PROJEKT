@@ -10,7 +10,7 @@
 * Back to menu button ath the bottom
 * ~~List of orders at the right~~
 * ~~Start button~~ and Score at the top
-* Failed or ~~successfull~~ pass of the map window
+* ~~Failed or successfull pass of the map window~~
 
 #### GameFlow
 * ~~Checking the win situation~~
