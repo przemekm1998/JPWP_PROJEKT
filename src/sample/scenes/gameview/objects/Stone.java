@@ -1,8 +1,8 @@
 package sample.scenes.gameview.objects;
 
-import javafx.application.Platform;
-import sample.InfoBox;
 import sample.scenes.gameview.GameFlow;
+import sample.scenes.gameview.objects.core.ActiveObject;
+import sample.scenes.gameview.objects.core.MapObject;
 
 public class Stone extends MapObject implements ActiveObject {
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\stone.png";
@@ -22,7 +22,7 @@ public class Stone extends MapObject implements ActiveObject {
 
     @Override
     public boolean performAction() {
-        GameFlow.Action.gameWon = false;
+        GameFlow.Action.setGameWon(false);
         return true;
     }
 }

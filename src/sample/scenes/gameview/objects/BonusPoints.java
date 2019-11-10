@@ -1,8 +1,10 @@
 package sample.scenes.gameview.objects;
 
 import sample.scenes.gameview.GameFlow;
+import sample.scenes.gameview.objects.core.ActiveObject;
+import sample.scenes.gameview.objects.core.MapObject;
 
-public class BonusPoints extends MapObject implements ActiveObject{
+public class BonusPoints extends MapObject implements ActiveObject {
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\nut.png";
 
     public BonusPoints(int x, int y){

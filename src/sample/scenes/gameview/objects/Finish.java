@@ -1,9 +1,10 @@
 package sample.scenes.gameview.objects;
 
-import sample.scenes.GameView;
 import sample.scenes.gameview.GameFlow;
+import sample.scenes.gameview.objects.core.ActiveObject;
+import sample.scenes.gameview.objects.core.MapObject;
 
-public class Finish extends MapObject implements ActiveObject{
+public class Finish extends MapObject implements ActiveObject {
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\finish.png";
 
     public Finish(int x, int y){
@@ -21,7 +22,7 @@ public class Finish extends MapObject implements ActiveObject{
 
     @Override
     public boolean performAction() {
-        GameFlow.Action.gameWon = true;
+        GameFlow.Action.setGameWon(true);
         return true;
     }
 }

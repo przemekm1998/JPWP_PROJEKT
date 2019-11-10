@@ -1,21 +1,14 @@
 package sample.scenes.gameview.elements;
 
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.InfoBox;
 import sample.scenes.gameview.GameFlow;
 import sample.scenes.gameview.controlling.Directions;
-import sample.scenes.gameview.objects.Finish;
-import sample.scenes.gameview.objects.MapObject;
-import sample.scenes.gameview.objects.Player;
-import sample.scenes.GameView;
 import sample.scenes.interfaces.SceneElement;
 
-import java.beans.EventHandler;
 import java.util.List;
 
 public class Score implements SceneElement {

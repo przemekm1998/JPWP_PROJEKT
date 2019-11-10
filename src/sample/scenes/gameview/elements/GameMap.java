@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import sample.scenes.gameview.objects.*;
+import sample.scenes.gameview.objects.core.MapObject;
 import sample.scenes.interfaces.SceneElement;
 
 import java.util.*;
@@ -152,6 +153,14 @@ public class GameMap implements SceneElement {
 
     private static void setTakenCoordinates(MapObject[][] takenCoordinates) {
         GameMap.takenCoordinates = takenCoordinates;
+    }
+
+    public static int getMaxWidth() {
+        return MAX_WIDTH;
+    }
+
+    public static int getMaxHeight() {
+        return MAX_HEIGHT;
     }
 
     @Override

@@ -1,24 +1,17 @@
 package sample.scenes.gameview;
 
 import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import sample.ConfirmBox;
 import sample.InfoBox;
-import sample.Main;
 import sample.scenes.GameView;
 import sample.scenes.gameview.controlling.Directions;
 import sample.scenes.gameview.elements.GameMap;
 import sample.scenes.gameview.elements.Instructions;
-import sample.scenes.gameview.elements.ListOfInstructions;
-import sample.scenes.gameview.objects.ActiveObject;
-import sample.scenes.gameview.objects.Finish;
-import sample.scenes.gameview.objects.MapObject;
+import sample.scenes.gameview.objects.core.ActiveObject;
+import sample.scenes.gameview.objects.core.MapObject;
 import sample.scenes.gameview.objects.Player;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameFlow {
     public static synchronized void runFlow() {
@@ -30,17 +23,12 @@ public class GameFlow {
     }
 
     public static class Action implements Runnable {
-        private volatile boolean exit;
+        private static boolean exit;
 
         private static int score;
         private static int steps;
 
-        Player player = GameMap.getPlayerObject();
-        GridPane gameMap = GameView.getGameMap();
-        List<Directions> commands = Instructions.getCommands();
-        MapObject[][] takenCoordinates = GameMap.getTakenCoordinates();
-
-        public static boolean gameWon;
+        private static boolean gameWon;
 
         public void run() {
             exit = false;
@@ -49,75 +37,92 @@ public class GameFlow {
             setScore(0);
             setSteps(0);
 
-            while (!exit) {
-                for (Directions dir : commands) {
-                    try {
-                        Thread.sleep(500); // Wait for 1 sec before updating the color
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                    move(dir, player, gameMap); // player moves
-                    System.out.println(getSteps());
-                    exit = checkBoxObject(takenCoordinates, player, gameWon);
-                    System.out.println(getScore());
-                    if (exit) {
-                        break;
-                    }
-                }
-                System.out.println("Final score: " + getScore());
-                System.out.println("Final steps: " + getSteps());
-                System.out.println("Final results: " + (getScore() - getSteps()));
-                // when all of the moves are performed and no win is detected
-                if (!exit) {
-                    Platform.runLater(() -> {
-                        InfoBox.display("Loose", "You've lost!");
-                    });
-                    break;
-                }
-                if (exit) {
-                    if(gameWon) {
-                        Platform.runLater(() -> {
-                            InfoBox.display("Eluwa", "You've won!");
-                        });
-                    }
-                    else if(!gameWon) {
-                        Platform.runLater(() -> {
-                            InfoBox.display("Loose", "Przegrana!");
-                        });
-                    }
+            while (!isExit()) {
+                performSteps();
 
+                // player has encountered obstacle or finish
+                if (isExit()) {
+                    if (isGameWon()) {
+                        showResults("Win!", "You've won!"); // player has won
+                    } else if (!isGameWon()) {
+                        showResults("Loose", "You've lost!"); // player has lost because of the obstacle
+                    }
                 }
             }
-
+            // when all of the moves are performed and no win is detected
+            if (!isExit()) {
+                showResults("Loose", "You've lost!");
+            }
         }
 
-        private static void move(Directions direction, MapObject object, GridPane gameMap) {
+        private static void showResults(String title, String message) {
+            Platform.runLater(() -> {
+                InfoBox.display(title, message);
+            });
+        }
+
+        private static void performSteps() {
+
+            Player player = GameMap.getPlayerObject();
+            GridPane gameMap = GameView.getGameMap();
+            List<Directions> commands = Instructions.getCommands();
+            MapObject[][] takenCoordinates = GameMap.getTakenCoordinates();
+
+            for (Directions dir : commands) {
+                try {
+                    Thread.sleep(500); // Wait for 1 sec before updating the color
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                try {
+                    move(dir, player, gameMap); // player moves
+                } catch (IllegalArgumentException e) {
+                    setExit(true);
+                    Action.gameWon = false;
+                    break;
+                }
+
+                boolean exit = checkBoxObject(takenCoordinates, player);
+                setExit(exit);
+
+                if (isExit()) {
+                    break;
+                }
+            }
+        }
+
+        private static void move(Directions direction, MapObject object, GridPane gameMap) throws IllegalArgumentException{
+
+            int newCoordinate = 0;
 
             switch (direction) {
                 case UP:
-                    int y = object.getPosY();
-                    y -= 1;
-                    object.setPosY(y);
+                    newCoordinate = object.getPosY();
+                    newCoordinate -= 1;
+                    object.setPosY(newCoordinate);
                     break;
 
                 case LEFT:
-                    int x = object.getPosX();
-                    x -= 1;
-                    object.setPosX(x);
+                    newCoordinate = object.getPosX();
+                    newCoordinate -= 1;
+                    object.setPosX(newCoordinate);
                     break;
 
                 case RIGHT:
-                    int x2 = object.getPosX();
-                    x2 += 1;
-                    object.setPosX(x2);
+                    newCoordinate = object.getPosX();
+                    newCoordinate += 1;
+                    object.setPosX(newCoordinate);
                     break;
 
                 case DOWN:
-                    int y2 = object.getPosY();
-                    y2 += 1;
-                    object.setPosY(y2);
+                    newCoordinate = object.getPosY();
+                    newCoordinate += 1;
+                    object.setPosY(newCoordinate);
                     break;
             }
+
+            cordsCheck(newCoordinate);
 
             int steps = getSteps();
             steps += 1;
@@ -127,7 +132,16 @@ public class GameFlow {
             gameMap.setColumnIndex(object.getImgView(), object.getPosX());
         }
 
-        private static boolean checkBoxObject(MapObject[][] takenCoordinates, Player player, boolean gameWon) {
+        private static void cordsCheck(int cordToCheck) throws IllegalArgumentException{
+            final int upperBorder = GameMap.getMaxHeight();
+            final int lowerBorder = 0;
+
+            if (cordToCheck > upperBorder || cordToCheck < lowerBorder) {
+                throw new IllegalArgumentException();
+            }
+        }
+
+        private static boolean checkBoxObject(MapObject[][] takenCoordinates, Player player) {
 
             boolean exit = false;
 
@@ -157,5 +171,23 @@ public class GameFlow {
         public static void setSteps(int steps) {
             Action.steps = steps;
         }
+
+        public static boolean isGameWon() {
+            return gameWon;
+        }
+
+        public static void setGameWon(boolean gameWon) {
+            Action.gameWon = gameWon;
+        }
+
+        public static boolean isExit() {
+            return exit;
+        }
+
+        public static void setExit(boolean exit) {
+            Action.exit = exit;
+        }
     }
+
+
 }

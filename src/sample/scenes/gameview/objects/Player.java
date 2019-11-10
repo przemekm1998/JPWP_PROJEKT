@@ -1,5 +1,7 @@
 package sample.scenes.gameview.objects;
 
+import sample.scenes.gameview.objects.core.MapObject;
+
 public class Player extends MapObject {
     private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\player.png";
 
