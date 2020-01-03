@@ -4,14 +4,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import sample.InfoBox;
 import sample.Main;
-import sample.scenes.gameview.GameFlow;
-import sample.scenes.gameview.controlling.Directions;
 import sample.scenes.interfaces.SceneElement;
 
-import java.util.List;
-
+/**
+ * The type Bottom pane.
+ */
 public class BottomPane implements SceneElement {
     @Override
     public Pane createWindow() {
@@ -19,7 +17,6 @@ public class BottomPane implements SceneElement {
         menu.setMinWidth(100);
         menu.setOnAction(e -> {
             Main.mainWindow.close();
-            Main.mainWindow.setScene(Main.menu);
             try {
                 new Main().start(Main.mainWindow);
             } catch (Exception ex) {

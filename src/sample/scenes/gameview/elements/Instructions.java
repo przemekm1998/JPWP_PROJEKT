@@ -13,6 +13,9 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * The type Instructions.
+ */
 public class Instructions implements SceneElement {
     private static List<Directions> commands;
 
@@ -62,10 +65,20 @@ public class Instructions implements SceneElement {
         return instructions;
     }
 
+    /**
+     * Gets commands.
+     *
+     * @return the commands
+     */
     public static List<Directions> getCommands() {
         return commands;
     }
 
+    /**
+     * Sets commands.
+     *
+     * @param commands the commands
+     */
     public static void setCommands(List<Directions> commands) {
         Instructions.commands = commands;
     }

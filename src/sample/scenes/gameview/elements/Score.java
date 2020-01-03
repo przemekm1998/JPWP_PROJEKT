@@ -13,6 +13,9 @@ import sample.scenes.interfaces.SceneElement;
 
 import java.util.List;
 
+/**
+ * The type Score.
+ */
 public class Score implements SceneElement {
     private static Label labelScore;
     private static Label labelSteps;
@@ -56,20 +59,40 @@ public class Score implements SceneElement {
         return 50;
     }
 
+    /**
+     * Gets label score.
+     *
+     * @return the label score
+     */
     public static Label getLabelScore() {
         return labelScore;
     }
 
+    /**
+     * Sets label score.
+     *
+     * @param score the score
+     */
     public static void setLabelScore(int score) {
         Platform.runLater(() -> {
             Score.labelScore.setText("Score: " + score);
         });
     }
 
+    /**
+     * Gets label steps.
+     *
+     * @return the label steps
+     */
     public static Label getLabelSteps() {
         return labelSteps;
     }
 
+    /**
+     * Sets label steps.
+     *
+     * @param steps the steps
+     */
     public static void setLabelSteps(int steps) {
         Platform.runLater(() -> {
             Score.labelSteps.setText("Steps: " + steps);

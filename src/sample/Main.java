@@ -5,21 +5,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.scenes.GameView;
 import sample.scenes.MenuView;
-import sample.scenes.gameview.controlling.Directions;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * The type Main.
+ */
 public class Main extends Application {
 
+    /**
+     * The constant mainWindow.
+     */
     public static Stage mainWindow;
-    public static Scene menu, game;
-    public static List<Directions> commands = new ArrayList<>();
+    /**
+     * The constant menu.
+     */
+    public static Scene menu;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         mainWindow = primaryStage;
 
@@ -30,12 +33,13 @@ public class Main extends Application {
             closeProgram();
         });
 
-        GameView gameView = new GameView();
 
 
-        // TODO -- clean this
         menu = MenuView.createMenu(mainWindow);
-        game = gameView.createWindow();
+
+
+        menu.getStylesheets().add("sample/Style.css");
+
 
         mainWindow.setTitle("Forest Paths");
         mainWindow.setScene(menu);
@@ -43,14 +47,19 @@ public class Main extends Application {
     }
 
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
-    private void closeProgram(){
+    private void closeProgram() {
         boolean answer = ConfirmBox.display("Exit Confirmation",
                 "Are you sure you want to exit?");
-        if(answer) {
+        if (answer) {
             mainWindow.close();
         }
     }

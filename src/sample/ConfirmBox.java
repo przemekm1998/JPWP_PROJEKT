@@ -8,9 +8,22 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * The type Confirm box.
+ */
 public class ConfirmBox {
+    /**
+     * The Answer.
+     */
     static boolean answer;
 
+    /**
+     * Display boolean.
+     *
+     * @param title   the title
+     * @param message the message
+     * @return the boolean
+     */
     public static boolean display(String title, String message) {
         Stage window = new Stage();
 
@@ -40,6 +53,7 @@ public class ConfirmBox {
         layout.setPrefWidth(200);
 
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("sample/Style.css");
         window.setScene(scene);
         window.showAndWait();
 

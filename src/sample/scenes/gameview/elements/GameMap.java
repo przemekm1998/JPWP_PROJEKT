@@ -5,12 +5,16 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import sample.scenes.MenuView;
 import sample.scenes.gameview.objects.*;
 import sample.scenes.gameview.objects.core.MapObject;
 import sample.scenes.interfaces.SceneElement;
 
 import java.util.*;
 
+/**
+ * The type Game map.
+ */
 public class GameMap implements SceneElement {
 
     // map boundaries
@@ -62,9 +66,12 @@ public class GameMap implements SceneElement {
         // Filling the map with the grass
         grassFill(gameMap);
 
+        // Setting the amount of objects based on selected level
+        int amount = getLevel();
+
         // Generating bonus points, random points and obstacles
         for (MapObject object : activeMapElements) {
-            objectsRandomizer(object, 3, gameMap);
+            objectsRandomizer(object, amount, gameMap);
         }
 
         // Adding player and finish object
@@ -131,6 +138,35 @@ public class GameMap implements SceneElement {
         return randomCords;
     }
 
+    private int getLevel(){
+        String level = MenuView.choiceBox.getValue();
+
+        int amount = 0;
+
+        switch (level) {
+            case "Easy":
+                amount = 3;
+                break;
+            case "Medium":
+                amount = 4;
+                break;
+            case "Hard":
+                amount = 5;
+                break;
+            default: {
+                amount = 3;
+                break;
+            }
+        }
+
+        return amount;
+    }
+
+    /**
+     * Gets player object.
+     *
+     * @return the player object
+     */
     public static Player getPlayerObject() {
         return playerObject;
     }
@@ -139,6 +175,11 @@ public class GameMap implements SceneElement {
         GameMap.playerObject = playerObject;
     }
 
+    /**
+     * Gets finish object.
+     *
+     * @return the finish object
+     */
     public static Finish getFinishObject() {
         return finishObject;
     }
@@ -147,6 +188,11 @@ public class GameMap implements SceneElement {
         GameMap.finishObject = finishObject;
     }
 
+    /**
+     * Get taken coordinates map object [ ] [ ].
+     *
+     * @return the map object [ ] [ ]
+     */
     public static MapObject[][] getTakenCoordinates() {
         return takenCoordinates;
     }
@@ -155,10 +201,20 @@ public class GameMap implements SceneElement {
         GameMap.takenCoordinates = takenCoordinates;
     }
 
+    /**
+     * Gets max width.
+     *
+     * @return the max width
+     */
     public static int getMaxWidth() {
         return MAX_WIDTH;
     }
 
+    /**
+     * Gets max height.
+     *
+     * @return the max height
+     */
     public static int getMaxHeight() {
         return MAX_HEIGHT;
     }

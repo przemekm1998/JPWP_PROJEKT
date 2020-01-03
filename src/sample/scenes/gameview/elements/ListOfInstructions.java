@@ -12,13 +12,29 @@ import sample.scenes.gameview.controlling.Directions;
 
 import java.util.List;
 
+/**
+ * The type List of instructions.
+ */
 public class ListOfInstructions implements SceneElement {
+    /**
+     * The constant label.
+     */
     public static Label label;
 
+    /**
+     * Gets label text.
+     *
+     * @return the label text
+     */
     public static String getLabelText() {
         return label.getText();
     }
 
+    /**
+     * Sets label text.
+     *
+     * @param text the text
+     */
     public static void setLabelText(String text) {
         ListOfInstructions.label.setText(text);
     }
@@ -59,6 +75,12 @@ public class ListOfInstructions implements SceneElement {
         return listOfInstructions;
     }
 
+    /**
+     * Delete instruction.
+     *
+     * @param listOfWords the list of words
+     * @param commands    the commands
+     */
     public static void deleteInstruction(String listOfWords, List<Directions> commands) {
         System.out.println(commands.get(commands.size() - 1));
 

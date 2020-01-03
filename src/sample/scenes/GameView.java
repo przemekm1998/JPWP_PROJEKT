@@ -8,6 +8,9 @@ import sample.scenes.interfaces.SceneView;
 
 import java.util.Random;
 
+/**
+ * The type Game view.
+ */
 public class GameView implements SceneView {
     private static GridPane gameMap;
 
@@ -32,10 +35,20 @@ public class GameView implements SceneView {
         return new Scene(borderPane);
     }
 
+    /**
+     * Gets game map.
+     *
+     * @return the game map
+     */
     public static GridPane getGameMap() {
         return gameMap;
     }
 
+    /**
+     * Sets game map.
+     *
+     * @param gameMap the game map
+     */
     public static void setGameMap(GridPane gameMap) {
         GameView.gameMap = gameMap;
     }

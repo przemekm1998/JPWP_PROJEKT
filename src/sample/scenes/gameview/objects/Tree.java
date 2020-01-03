@@ -6,13 +6,25 @@ import sample.scenes.gameview.objects.core.MapObject;
 
 import java.util.Random;
 
+/**
+ * The type Tree.
+ */
 public class Tree extends MapObject implements ActiveObject {
-    private static final String IMG_PATH = "C:\\Users\\przem\\IdeaProjects\\JPWP_PROJEKT1\\src\\img\\tree.png";
+    private static final String IMG_PATH = "..\\JPWP_PROJEKT1\\src\\img\\tree.png";
 
+    /**
+     * Instantiates a new Tree.
+     *
+     * @param x the x
+     * @param y the y
+     */
     public Tree(int x, int y){
         super(x, y);
     }
 
+    /**
+     * Instantiates a new Tree.
+     */
     public Tree(){
         super();
     }

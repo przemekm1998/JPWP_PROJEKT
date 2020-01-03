@@ -7,11 +7,32 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Main;
 
+/**
+ * The type Menu view.
+ */
 public class MenuView {
+    /**
+     * The constant gameView.
+     */
+    public static GameView gameView = new GameView();
+    /**
+     * The constant game.
+     */
+    public static Scene game;
+
+    /**
+     * The constant choiceBox.
+     */
+    public static ChoiceBox<String> choiceBox = new ChoiceBox<>();
+
+    /**
+     * Create menu scene.
+     *
+     * @param primaryStage the primary stage
+     * @return the scene
+     */
     public static Scene createMenu(Stage primaryStage) {
         Stage window = new Stage();
 
@@ -22,15 +43,17 @@ public class MenuView {
         Label label = new Label("Welcome to Forest Paths!");
         Label label1 = new Label("Select difficulty level");
 
-        // TODO -- saving variable of choice
-        ChoiceBox<String> choiceBox = new ChoiceBox<>();
-        choiceBox.getItems().addAll("Easy", "Medium", "Hard");
-        choiceBox.setValue("Easy");
+        if (choiceBox.getItems().isEmpty()) {
+            choiceBox.getItems().addAll("Easy", "Medium", "Hard");
+            choiceBox.setValue("Easy");
+        }
 
         Button startButton = new Button("Start Game");
         startButton.setOnAction(e -> {
-            Platform.runLater( () -> {
-                primaryStage.setScene(Main.game);
+            Platform.runLater(() -> {
+                game = gameView.createWindow();
+                game.getStylesheets().add("sample/Style.css");
+                primaryStage.setScene(game);
             });
         });
 

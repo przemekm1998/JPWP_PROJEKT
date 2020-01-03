@@ -1,24 +1,26 @@
 package sample;
 
-import com.sun.javafx.scene.traversal.Direction;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.scenes.GameView;
-import sample.scenes.gameview.controlling.Directions;
-import sample.scenes.gameview.elements.GameMap;
-import sample.scenes.gameview.elements.Instructions;
-import sample.scenes.gameview.elements.ListOfInstructions;
+import sample.scenes.MenuView;
 
+/**
+ * The type Info box.
+ */
 public class InfoBox {
 
+    /**
+     * Display.
+     *
+     * @param title   the title
+     * @param message the message
+     */
     public static void display(String title, String message) {
         Stage window = new Stage();
 
@@ -36,7 +38,7 @@ public class InfoBox {
             Main.mainWindow.close();
             Platform.runLater(() -> {
                 try {
-                    Main.mainWindow.setScene(Main.game);
+                    Main.mainWindow.setScene(MenuView.game);
                     new Main().start(Main.mainWindow);
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -49,6 +51,7 @@ public class InfoBox {
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
+        scene.getStylesheets().add("sample/Style.css");
         window.setScene(scene);
         window.showAndWait();
     }

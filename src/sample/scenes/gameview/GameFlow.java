@@ -1,7 +1,6 @@
 package sample.scenes.gameview;
 
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import sample.InfoBox;
 import sample.scenes.GameView;
@@ -15,7 +14,13 @@ import sample.scenes.gameview.objects.Player;
 
 import java.util.List;
 
+/**
+ * The type Game flow.
+ */
 public class GameFlow {
+    /**
+     * Run flow.
+     */
     public static synchronized void runFlow() {
 
         Action myAction = new Action();
@@ -25,6 +30,9 @@ public class GameFlow {
         t1.start();
     }
 
+    /**
+     * The type Action.
+     */
     public static class Action implements Runnable {
 
         private static boolean exit;
@@ -160,34 +168,72 @@ public class GameFlow {
             return exit;
         }
 
+        /**
+         * Gets score.
+         *
+         * @return the score
+         */
         public static int getScore() {
             return score;
         }
 
+        /**
+         * Sets score.
+         *
+         * @param score the score
+         */
         public static void setScore(int score) {
             Action.score = score;
         }
 
+        /**
+         * Gets steps.
+         *
+         * @return the steps
+         */
         public static int getSteps() {
             return steps;
         }
 
+        /**
+         * Increment steps.
+         */
         public static void incrementSteps() {
             Action.steps += 1;
         }
 
+        /**
+         * Is game won boolean.
+         *
+         * @return the boolean
+         */
         public static boolean isGameWon() {
             return gameWon;
         }
 
+        /**
+         * Sets game won.
+         *
+         * @param gameWon the game won
+         */
         public static void setGameWon(boolean gameWon) {
             Action.gameWon = gameWon;
         }
 
+        /**
+         * Is exit boolean.
+         *
+         * @return the boolean
+         */
         public static boolean isExit() {
             return exit;
         }
 
+        /**
+         * Sets exit.
+         *
+         * @param exit the exit
+         */
         public static void setExit(boolean exit) {
             Action.exit = exit;
         }
