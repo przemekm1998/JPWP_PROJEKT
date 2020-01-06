@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import sample.ConfirmBox;
 import sample.InfoBox;
 import sample.scenes.interfaces.SceneElement;
 import sample.scenes.gameview.controlling.Directions;
@@ -54,7 +55,7 @@ public class ListOfInstructions implements SceneElement {
                 deleteInstruction(listOfInstructions, commands);
             }
             else {
-                InfoBox.display("Warning", "No instruction to delete");
+                ConfirmBox.display("Warning", "No instruction to delete");
             }
 
         });

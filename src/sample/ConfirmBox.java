@@ -34,21 +34,15 @@ public class ConfirmBox {
         label.setText(message);
 
         //Create two buttons
-        Button yesButton = new Button("Yes");
-        Button noButton = new Button("No");
+        Button yesButton = new Button("Ok");
 
         yesButton.setOnAction(e -> {
             answer = true;
             window.close();
         });
 
-        noButton.setOnAction(e -> {
-            answer = false;
-            window.close();
-        });
-
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, yesButton, noButton);
+        layout.getChildren().addAll(label, yesButton);
         layout.setAlignment(Pos.CENTER);
         layout.setPrefWidth(200);
 
