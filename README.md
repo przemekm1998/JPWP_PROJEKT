@@ -2,8 +2,7 @@
 
 ## TODO
 ### Menu
-* Levels
-* Tutorial
+* ~~Levels~~
 
 ### Game
 #### GameView
