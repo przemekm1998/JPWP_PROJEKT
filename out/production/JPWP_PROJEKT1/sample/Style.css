@@ -1,0 +1,15 @@
+.root{
+    -fx-background-color: #EFEFD0;
+    -fx-font-size: 11pt;
+}
+.label{
+    -fx-text-fill: #654236;
+}
+.button{
+    -fx-background-color: linear-gradient(#DB995A, #DA7635);
+    -fx-text-fill: #654236;
+}
+.choice-box{
+    -fx-background-color: #DB995A;
+    -fx-text-fill: #654236;
+}
